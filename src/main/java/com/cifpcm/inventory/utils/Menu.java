@@ -1,8 +1,11 @@
 package com.cifpcm.inventory.utils;
 
+import java.util.Scanner;
+
 public class Menu {
     public static String showMain() {
-        return Font.blueBold("1") + " - Gestión Aulas\n" +
+        return Font.bold("-".repeat(5) + Font.blueBold(" Menú Principal ") + "-".repeat(5) + "\n") +
+                Font.blueBold("1") + " - Gestión Aulas\n" +
                 Font.blueBold("2") + " - Gestión Productos\n" +
                 Font.blueBold("3") + " - Gestión Marcajes\n" +
                 Font.blueBold("4") + " - Informes\n" +
@@ -10,8 +13,9 @@ public class Menu {
                 Font.blueBold("0") + " - Salir\n";
     }
 
-    public static String showSpecific(String toShow) {
-        return Font.blueBold("1") + " - Crear " + toShow + "\n" +
+    private static String showSpecific(String toShow) {
+        return Font.bold("-".repeat(5) + " Gestión de " + Font.blueBold(toShow + "s ") + "-".repeat(5) + "\n") +
+                Font.blueBold("1") + " - Crear " + toShow + "\n" +
                 Font.blueBold("2") + " - Listar " + toShow + "s\n" +
                 Font.blueBold("3") + " - Eliminar " + toShow + "\n" +
                 Font.blueBold("4") + " - Modificar " + toShow + "\n" +
@@ -19,7 +23,8 @@ public class Menu {
     }
 
     public static String showData() {
-        return Font.blueBold("1") + " - Cargar datos de " + Font.bold("trabajo desconectado\n") +
+        return Font.bold("-".repeat(5) + Font.blueBold(" Datos ") + "-".repeat(5) + "\n") +
+                Font.blueBold("1") + " - Cargar datos de " + Font.bold("trabajo desconectado\n") +
                 Font.blueBold("2") + " - Guardar datos a " + Font.bold("trabajo desconectado\n") +
                 Font.blueBold("3") + " - Cargar datos de " + Font.bold("Base de Datos\n") +
                 Font.blueBold("4") + " - Guardar datos a " + Font.bold("Base de Datos\n") +
@@ -27,11 +32,35 @@ public class Menu {
     }
 
     public static String showReports() {
-        return Font.blueBold("1") + " - Mostrar los fichajes de un producto ordenador por fecha " + Font.bold("(entre dos fechas).\n") +
+        return Font.bold("-".repeat(5) + Font.blueBold(" Informes ") + "-".repeat(5) + "\n") +
+                Font.blueBold("1") + " - Mostrar los fichajes de un producto ordenador por fecha " + Font.bold("(entre dos fechas).\n") +
                 Font.blueBold("2") + " - Mostrar los fichajes de un aula " + Font.bold("(entre dos fechas).\n") +
                 Font.blueBold("3") + " - Mostar los fichajes de un producto y un aula (o pabellones)\n" +
                 Font.blueBold("4") + " - Informe a crear por el alumno " + Font.bold("(Detección de errores equipos/en segunda planta)\n") +
                 Font.blueBold("0") + " - Volver\n";
+    }
+
+    public static void manageSpecific(String toShow) {
+        System.out.println(Menu.showSpecific(toShow));
+        int option = Menu.getOption();
+        System.out.println(option);
+        switch (option) {
+            case 1 -> System.out.println("Create");
+            case 2 -> System.out.println("List");
+            case 3 -> System.out.println("Delete");
+            case 4 -> System.out.println("Update");
+            case 0 -> System.out.println("Back");
+        }
+    }
+
+    public static int getOption() {
+        int option = -1;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Introduce una opción: ");
+        option = scanner.nextInt();
+        scanner.nextLine();
+        return option;
+
     }
 }
 

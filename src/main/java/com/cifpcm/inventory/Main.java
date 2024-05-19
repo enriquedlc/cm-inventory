@@ -2,16 +2,25 @@ package com.cifpcm.inventory;
 
 import com.cifpcm.inventory.utils.Menu;
 
+import static com.cifpcm.inventory.utils.Menu.manageSpecific;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println(Menu.showMain());
+        int option = 1;
+        while (option != 0) {
 
-        System.out.println(Menu.showSpecific("Aula"));
-        System.out.println(Menu.showSpecific("Producto"));
-        System.out.println(Menu.showSpecific("Marcaje"));
+            System.out.println(Menu.showMain());
+            option = Menu.getOption();
 
-        System.out.println(Menu.showData());
-
-        System.out.println(Menu.showReports());
+            switch (option) {
+                case 1 -> manageSpecific("Aula");
+                case 2 -> manageSpecific("Producto");
+                case 3 -> manageSpecific("Marcaje");
+                case 4 -> System.out.println(Menu.showReports());
+                case 5 -> System.out.println(Menu.showData());
+                case 0 -> System.out.println("Saliendo...");
+                default -> System.out.println("Opción no válida");
+            }
+        }
     }
 }
