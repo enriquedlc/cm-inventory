@@ -1,4 +1,4 @@
-package com.cifpcm.inventory;
+package com.cifpcm.inventory.models;
 
 import java.sql.Timestamp;
 

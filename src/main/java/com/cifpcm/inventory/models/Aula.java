@@ -1,4 +1,4 @@
-package com.cifpcm.inventory;
+package com.cifpcm.inventory.models;
 
 public class Aula {
     private int idAula;

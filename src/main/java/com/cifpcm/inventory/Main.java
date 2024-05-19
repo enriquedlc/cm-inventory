@@ -1,5 +1,7 @@
 package com.cifpcm.inventory;
 
+import com.cifpcm.inventory.utils.Menu;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println(Menu.showMain());

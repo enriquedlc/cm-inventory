@@ -1,4 +1,4 @@
-package com.cifpcm.inventory;
+package com.cifpcm.inventory.models;
 
 public enum TipoMarcaje {
     ENTRADA, SALIDA;

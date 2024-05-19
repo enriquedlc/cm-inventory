@@ -1,4 +1,4 @@
-package com.cifpcm.inventory;
+package com.cifpcm.inventory.utils;
 
 public class Color {
     public static final String RESET = "\033[0m";

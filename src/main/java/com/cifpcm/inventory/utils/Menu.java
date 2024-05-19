@@ -1,4 +1,4 @@
-package com.cifpcm.inventory;
+package com.cifpcm.inventory.utils;
 
 public class Menu {
     public static String showMain() {
