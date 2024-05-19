@@ -8,13 +8,13 @@ import java.sql.Statement;
 
 public class ConnectionDb {
 
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/difpcm-inventory";
-        String user = "root";
-        String password = "";
+    private static final String URL = "jdbc:mysql://localhost:3306/inventario";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
+    public static void main(String[] args) {
         try {
-            Connection connection = DriverManager.getConnection(url, user, password);
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM aula" + " ");
 

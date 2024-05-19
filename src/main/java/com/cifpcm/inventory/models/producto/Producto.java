@@ -1,4 +1,4 @@
-package com.cifpcm.inventory.models;
+package com.cifpcm.inventory.models.producto;
 
 public class Producto{
 
