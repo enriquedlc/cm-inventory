@@ -9,5 +9,9 @@ public class Main {
         System.out.println(Menu.showSpecific("Aula"));
         System.out.println(Menu.showSpecific("Producto"));
         System.out.println(Menu.showSpecific("Marcaje"));
+
+        System.out.println(Menu.showData());
+
+        System.out.println(Menu.showReports());
     }
 }
