@@ -12,9 +12,19 @@ public class ConnectionDb {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
+    public static Connection get() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+        }
+        return connection;
+    }
+
     public static void main(String[] args) {
         try {
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection connection = ConnectionDb.get();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM aula" + " ");
 
