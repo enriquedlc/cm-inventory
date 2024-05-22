@@ -1,57 +1,140 @@
 package com.cifpcm.inventory.models.producto;
 
-public class Producto{
+import com.cifpcm.inventory.database.ConnectionDb;
+import com.cifpcm.inventory.database.SQLBuilder;
 
-    private String idProducto;
-    private String Descripcion;
-    private String EAN13;
-    private String keyRFID;
+import java.sql.*;
+import java.util.ArrayList;
 
-    public Producto() {
-    }
+public class Producto implements ProductoInterface {
+    private final String descripcion;
+    private final String ean;
+    private final String keyRFID;
+    private int idProducto;
 
-    public Producto(String idProducto, String Descripcion, String EAN13, String keyRFID) {
+    public Producto(int idProducto, String descripcion, String ean, String keyRFID) {
         this.idProducto = idProducto;
-        this.Descripcion = Descripcion;
-        this.EAN13 = EAN13;
+        this.descripcion = descripcion;
+        this.ean = ean;
         this.keyRFID = keyRFID;
     }
 
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
-    }
-
-    public String getDescripcion() {
-        return Descripcion;
-    }
-
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
-    }
-
-    public String getEAN13() {
-        return EAN13;
-    }
-
-    public void setEAN13(String EAN13) {
-        this.EAN13 = EAN13;
-    }
-
-    public String getKeyRFID() {
-        return keyRFID;
-    }
-
-    public void setKeyRFID(String keyRFID) {
+    public Producto(String descripcion, String ean, String keyRFID) {
+        this.descripcion = descripcion;
+        this.ean = ean;
         this.keyRFID = keyRFID;
     }
 
     @Override
-    public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", Descripcion=" + Descripcion + ", EAN13=" + EAN13 + ", keyRFID=" + keyRFID + '}';
+    public int getIdProducto() {
+        return idProducto;
     }
-    
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    @Override
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    @Override
+    public String getEan() {
+        return ean;
+    }
+
+    @Override
+    public String getKeyRFID() {
+        return keyRFID;
+    }
+
+    @Override
+    public boolean insertProducto(Producto producto) {
+        String sql = SQLBuilder.getINSERT_PRODUCTO_SQL();
+        boolean rowInserted = false;
+        try (Connection connection = ConnectionDb.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, producto.getDescripcion());
+            preparedStatement.setString(2, producto.getEan());
+            preparedStatement.setString(3, producto.getKeyRFID());
+            rowInserted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return rowInserted;
+    }
+
+    @Override
+    public boolean updateProducto(Producto producto) {
+        String sql = SQLBuilder.getUPDATE_PRODUCTO_SQL();
+        boolean rowUpdated = false;
+        try (Connection connection = ConnectionDb.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, producto.getDescripcion());
+            preparedStatement.setString(2, producto.getEan());
+            preparedStatement.setString(3, producto.getKeyRFID());
+            preparedStatement.setInt(4, producto.getIdProducto());
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return rowUpdated;
+    }
+
+    @Override
+    public boolean deleteProducto(int id) {
+        String sql = SQLBuilder.getDELETE_PRODUCTO_SQL();
+        boolean rowDeleted = false;
+        try (Connection connection = ConnectionDb.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return rowDeleted;
+    }
+
+    @Override
+    public Producto selectProducto(int id) {
+        String sql = SQLBuilder.getSELECT_PRODUCTO_BY_ID();
+        Producto producto = null;
+        try (Connection connection = ConnectionDb.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                String descripcion = result.getString("descripcion");
+                String ean = result.getString("ean");
+                String keyRFID = result.getString("keyRFID");
+                producto = new Producto(id, descripcion, ean, keyRFID);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return producto;
+    }
+
+    @Override
+    public ArrayList<Producto> selectAllProductos() {
+        String sql = SQLBuilder.getSELECT_ALL_PRODUCTOS();
+        ArrayList<Producto> productos = new ArrayList<>();
+        try (Connection connection = ConnectionDb.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet result = preparedStatement.executeQuery()) {
+            while (result.next()) {
+                int idProducto = result.getInt("idProducto");
+                String descripcion = result.getString("descripcion");
+                String ean = result.getString("ean");
+                String keyRFID = result.getString("keyRFID");
+                productos.add(new Producto(idProducto, descripcion, ean, keyRFID));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return productos;
+    }
+
 }
+

@@ -2,13 +2,14 @@ package com.cifpcm.inventory.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConnectionDb {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/inventario";
+     private static final String URL = "jdbc:mysql://localhost:3306/difpcm-inventory";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
@@ -23,17 +24,14 @@ public class ConnectionDb {
     }
 
     public static void main(String[] args) {
-        try {
-            Connection connection = ConnectionDb.get();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM aula" + " ");
+        try (Connection connection = ConnectionDb.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLBuilder.getSELECT_ALL_AULAS());
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 System.out.println(resultSet.getString(1)
                         + "\t" + resultSet.getString(2)
-                        + "\t" + resultSet.getString(3) + "\t"
-                        + "Conexión exitosa");
-                connection.close();
+                        + "\t" + resultSet.getString(3));
             }
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
