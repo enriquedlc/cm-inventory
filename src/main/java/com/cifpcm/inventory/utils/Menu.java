@@ -41,17 +41,21 @@ public class Menu {
     }
 
     public static void manageSpecific(String toShow) {
-        System.out.println(Menu.showSpecific(toShow));
-        int option = Menu.getOption();
-        System.out.println(option);
-        switch (option) {
-            case 1 -> System.out.println("Create");
-            case 2 -> System.out.println("List");
-            case 3 -> System.out.println("Delete");
-            case 4 -> System.out.println("Update");
-            case 0 -> System.out.println("Back");
-        }
+        int option;
+        do {
+            System.out.println(Menu.showSpecific(toShow));
+            option = Menu.getOption();
+            switch (option) {
+                case 1 -> System.out.println("Create");
+                case 2 -> System.out.println("List");
+                case 3 -> System.out.println("Delete");
+                case 4 -> System.out.println("Update");
+                case 0 -> System.out.println("Back");
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        } while (option != 0);
     }
+
 
     public static int getOption() {
         int option = -1;

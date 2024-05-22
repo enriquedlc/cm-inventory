@@ -4,6 +4,9 @@ import com.cifpcm.inventory.mediator.Mediator;
 
 import java.util.Scanner;
 import com.cifpcm.inventory.mediator.MediatorInterface;
+import com.cifpcm.inventory.models.aula.GestorAula;
+import com.cifpcm.inventory.models.marcaje.GestorMarcaje;
+import com.cifpcm.inventory.models.producto.GestorProducto;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,9 +25,9 @@ public class Main {
             int option = scanner.nextInt();
 
             switch (option) {
-                case 1 -> manageAulas(mediator, scanner);
-                case 2 -> manageProductos(mediator, scanner);
-                case 3 -> manageMarcajes(mediator, scanner);
+                case 1 -> GestorAula.showMenuAulas();
+                case 2 -> GestorProducto.showMenuProductos();
+                case 3 -> GestorMarcaje.showMenuMarcajes();
                 case 4 -> generateReports(mediator, scanner);
                 case 5 -> manageData(mediator, scanner);
                 case 0 -> System.exit(0);

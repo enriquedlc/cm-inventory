@@ -4,10 +4,21 @@
  */
 package com.cifpcm.inventory.models.producto;
 
+import com.cifpcm.inventory.mediator.MediatorInterface;
+import com.cifpcm.inventory.utils.Menu;
+
 /**
  *
  * @author tecen
  */
 public class GestorProducto {
-    
+
+    public GestorProducto(MediatorInterface mediator) {
+
+    }
+
+    public static void showMenuProductos() {
+        Menu.manageSpecific("Producto");
+    }
+
 }
