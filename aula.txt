@@ -1,0 +1,10 @@
+1,Aula de Informática, 192.168.0.1
+2,Laboratorio de Física,192.168.0.2
+3,Sala de Conferencias,192.168.0.3
+4,Aula de Matemáticas, 192.168.0.4
+5,Biblioteca,192.168.0.5
+6,Aula de Química,192.168.0.6
+7,Aula de Biología,192.168.0.7
+8,Aula de Arte,192.168.0.8
+9,Sala de Música,192.168.0.9
+10,Aula de Idiomas,192.168.0.10

@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `marcaje`(
     `IdMarcaje` INT(11) NOT NULL,
     `IdProducto` INT(11) NOT NULL,
     `IdAula` INT(11) NOT NULL,
-    `ipo` INT(11) NOT NULL,
+    `Tipo` INT(11) NOT NULL,
     `TimeStamp` DATETIME NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 -- --------------------------------------------------------

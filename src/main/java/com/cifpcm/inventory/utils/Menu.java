@@ -5,6 +5,8 @@ import com.cifpcm.inventory.models.marcaje.TipoMarcaje;
 import java.util.Scanner;
 
 public class Menu {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static String showMain() {
         return Font.bold("-".repeat(5) + Font.blueBold(" Menú Principal ") + "-".repeat(5) + "\n") +
                 Font.blueBold("1") + " - Gestión Aulas\n" +
@@ -61,45 +63,35 @@ public class Menu {
 
     public static int getInt() {
         int option = -1;
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Introduce una opción: ");
         option = scanner.nextInt();
         scanner.nextLine();
         return option;
     }
 
-    public static int getInt(String message) {
-        int option = -1;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(message);
-        option = scanner.nextInt();
-        scanner.nextLine();
-        return option;
+    public static int getInt(String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextInt()) {
+            scanner.next();
+            System.out.print("Por favor, introduce un número válido: ");
+        }
+        return scanner.nextInt();
     }
 
     public static String getString(String message) {
         String option = "";
-        Scanner scanner = new Scanner(System.in);
         System.out.print(message);
         option = scanner.nextLine();
         return option;
     }
 
     public static TipoMarcaje getTipoMarcaje() {
-        int tipoMarcajeInt = -1;
-        TipoMarcaje tipoMarcaje = null;
-        while (tipoMarcaje == null) {
-            System.out.println("Tipo de marcaje: ");
-            System.out.println("1 - Entrada");
-            System.out.println("2 - Salida");
-            tipoMarcajeInt = Menu.getInt("Introduce el tipo de marcaje: ");
-            switch (tipoMarcajeInt) {
-                case 1 -> tipoMarcaje = TipoMarcaje.ENTRADA;
-                case 2 -> tipoMarcaje = TipoMarcaje.SALIDA;
-                default -> System.out.println("Opción inválida. Por favor, introduce 1 para Entrada o 2 para Salida.");
-            }
+        System.out.println("Selecciona el tipo de marcaje:");
+        for (TipoMarcaje type : TipoMarcaje.values()) {
+            System.out.println(type.ordinal() + " - " + type.getTipoMarcajeValue());
         }
-        return tipoMarcaje;
+        int choice = getInt("Introduce el número correspondiente al tipo de marcaje: ");
+        return TipoMarcaje.values()[choice];
     }
 }
 

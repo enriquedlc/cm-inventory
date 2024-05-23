@@ -7,6 +7,7 @@ package com.cifpcm.inventory.models.marcaje;
 import com.cifpcm.inventory.mediator.MediatorInterface;
 import com.cifpcm.inventory.models.aula.Aula;
 import com.cifpcm.inventory.models.producto.Producto;
+import com.cifpcm.inventory.utils.Confirm;
 import com.cifpcm.inventory.utils.Menu;
 
 import java.sql.Date;
@@ -55,10 +56,18 @@ public class GestorMarcaje {
 
                     marcaje.insertMarcaje(new Marcaje(idProducto, idAula, newFecha, tipoMarcaje));
                 }
-                case 2 -> marcaje.selectAllMarcajes().forEach(System.out::println);
+                case 2 ->marcaje.selectAllMarcajes().forEach(System.out::println);
+
                 case 3 -> {
                     int idMarcaje = Menu.getInt("Introduce el id del marcaje a eliminar: ");
-                    marcaje.deleteMarcaje(idMarcaje);
+                    boolean confirm = Confirm.getConfirmation("¿Estás seguro de que deseas eliminar el marcaje con ID " + idMarcaje + "? (s/n): ");
+                    if (confirm) {
+                        marcaje.deleteMarcaje(idMarcaje);
+                        System.out.println("Marcaje eliminado.");
+                    } else {
+                        System.out.println("Operación cancelada.");
+                    }
+                    marcaje.selectAllMarcajes().forEach(System.out::println);
                 }
                 case 4 -> {
                     int idMarcaje = Menu.getInt("Introduce el id del marcaje a modificar: ");
@@ -84,7 +93,7 @@ public class GestorMarcaje {
                     marcaje.updateMarcaje(new Marcaje(idMarcaje, idProducto, idAula, newFecha, tipoMarcaje));
                 }
                 case 0 -> System.out.println("Back");
-                default -> System.out.println("Invalid option. Please try again.");
+                default -> System.out.println("Opción inválida. Porfavor intenta de nuevo.");
             }
         } while (option != 0);
     }

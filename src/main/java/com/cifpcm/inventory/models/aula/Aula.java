@@ -2,8 +2,8 @@ package com.cifpcm.inventory.models.aula;
 
 import com.cifpcm.inventory.database.ConnectionDb;
 import com.cifpcm.inventory.database.SQLBuilder;
+import com.cifpcm.inventory.models.marcaje.Marcaje;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,17 +64,25 @@ public class Aula implements AulaInterface {
     }
 
     @Override
-    public boolean deleteAula(int id) {
-        String sql = SQLBuilder.getDELETE_AULA_SQL();
-        boolean rowDeleted = false;
-        try (Connection connection = ConnectionDb.get();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, id);
-            rowDeleted = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return rowDeleted;
+    public boolean deleteAula(int idAula) {
+    Marcaje marcaje = new Marcaje();
+    int count = marcaje.countMarcajesByAula(idAula);
+
+    if (count > 0) {
+        System.out.println("No se puede eliminar el aula con ID " + idAula + " porque tiene marcajes asociados.");
+        return false;
+    }
+
+    String sql = SQLBuilder.getDELETE_AULA_SQL();
+    boolean rowDeleted = false;
+    try (Connection connection = ConnectionDb.get();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setInt(1, idAula);
+        rowDeleted = preparedStatement.executeUpdate() > 0;
+    } catch (SQLException ex) {
+        System.out.println(ex);
+    }
+    return rowDeleted;
     }
 
     @Override
@@ -116,6 +124,21 @@ public class Aula implements AulaInterface {
         }
         return aulas;
     }
+    public boolean exists(int idAula) {
+    String sql = SQLBuilder.getEXISTS_AULA_SQL();
+    try (Connection connection = ConnectionDb.get();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setInt(1, idAula);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex);
+    }
+    return false;
+}
 
     @Override
     public int getIdAula() {
