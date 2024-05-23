@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Marcaje implements MarcajeInterface {
-    private final int idProducto;
-    private final int idAula;
-    private final Date timeStamp;
-    private final TipoMarcaje tipo;
+    private int idProducto;
+    private int idAula;
+    private Date timeStamp;
+    private TipoMarcaje tipo;
     private int idMarcaje;
+
+    public Marcaje() {}
 
     public Marcaje(int idProducto, int idAula, Date timeStamp, TipoMarcaje tipo) {
         this.idProducto = idProducto;

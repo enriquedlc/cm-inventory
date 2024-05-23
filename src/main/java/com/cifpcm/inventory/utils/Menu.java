@@ -1,5 +1,7 @@
 package com.cifpcm.inventory.utils;
 
+import com.cifpcm.inventory.models.marcaje.TipoMarcaje;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -13,7 +15,7 @@ public class Menu {
                 Font.blueBold("0") + " - Salir\n";
     }
 
-    private static String showSpecific(String toShow) {
+    public static String showSpecific(String toShow) {
         return Font.bold("-".repeat(5) + " Gestión de " + Font.blueBold(toShow + "s ") + "-".repeat(5) + "\n") +
                 Font.blueBold("1") + " - Crear " + toShow + "\n" +
                 Font.blueBold("2") + " - Listar " + toShow + "s\n" +
@@ -42,9 +44,9 @@ public class Menu {
 
     public static void manageSpecific(String toShow) {
         int option;
-        do {
+        do  {
             System.out.println(Menu.showSpecific(toShow));
-            option = Menu.getOption();
+            option = Menu.getInt();
             switch (option) {
                 case 1 -> System.out.println("Create");
                 case 2 -> System.out.println("List");
@@ -57,14 +59,47 @@ public class Menu {
     }
 
 
-    public static int getOption() {
+    public static int getInt() {
         int option = -1;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduce una opción: ");
         option = scanner.nextInt();
         scanner.nextLine();
         return option;
+    }
 
+    public static int getInt(String message) {
+        int option = -1;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(message);
+        option = scanner.nextInt();
+        scanner.nextLine();
+        return option;
+    }
+
+    public static String getString(String message) {
+        String option = "";
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(message);
+        option = scanner.nextLine();
+        return option;
+    }
+
+    public static TipoMarcaje getTipoMarcaje() {
+        int tipoMarcajeInt = -1;
+        TipoMarcaje tipoMarcaje = null;
+        while (tipoMarcaje == null) {
+            System.out.println("Tipo de marcaje: ");
+            System.out.println("1 - Entrada");
+            System.out.println("2 - Salida");
+            tipoMarcajeInt = Menu.getInt("Introduce el tipo de marcaje: ");
+            switch (tipoMarcajeInt) {
+                case 1 -> tipoMarcaje = TipoMarcaje.ENTRADA;
+                case 2 -> tipoMarcaje = TipoMarcaje.SALIDA;
+                default -> System.out.println("Opción inválida. Por favor, introduce 1 para Entrada o 2 para Salida.");
+            }
+        }
+        return tipoMarcaje;
     }
 }
 

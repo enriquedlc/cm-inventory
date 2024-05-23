@@ -7,10 +7,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Producto implements ProductoInterface {
-    private final String descripcion;
-    private final String ean;
-    private final String keyRFID;
+    private String descripcion;
+    private String ean;
+    private String keyRFID;
     private int idProducto;
+
+    public Producto() {}
 
     public Producto(int idProducto, String descripcion, String ean, String keyRFID) {
         this.idProducto = idProducto;

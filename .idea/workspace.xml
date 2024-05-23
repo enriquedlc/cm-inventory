@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="80f52d2c-7d87-44f4-96dd-3157815938e7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/GestorAula.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/GestorAula.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/GestorMarcaje.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/GestorMarcaje.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/Marcaje.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/Marcaje.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/producto/GestorProducto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/producto/GestorProducto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/producto/Producto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/producto/Producto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/utils/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/utils/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
