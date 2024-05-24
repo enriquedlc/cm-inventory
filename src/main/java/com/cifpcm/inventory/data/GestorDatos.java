@@ -10,6 +10,9 @@ import java.util.Scanner;
  * @author tecen
  */
 public class GestorDatos {
+    private static final String AULA_FILE = "aulas.txt";
+    private static final String PRODUCTO_FILE = "productos.txt";
+    private static final String MARCAJE_FILE = "marcajes.txt";
 
     public static void manageData(MediatorInterface mediator, Scanner scanner, Datos datos) throws IOException, ClassNotFoundException {
         while (true) {
@@ -19,20 +22,8 @@ public class GestorDatos {
             scanner.nextLine();
 
             switch (option) {
-                case 1 -> {
-                    String aulaFile = "aula.txt";
-                    String productoFile = "productos.txt";
-                    String marcajeFile = "marcajes.txt";
-                    datos.cargarDatosTrabajoDesconectado(aulaFile, productoFile, marcajeFile);
-                }
-
-                case 2 -> {
-                    String aulaFile = "aula.txt";
-                    String productoFile = "productos.txt";
-                    String marcajeFile = "marcajes.txt";
-                    datos.guardarDatosTrabajoDesconectado(aulaFile, productoFile, marcajeFile);
-                }
-
+                case 1 -> datos.cargarDatosTrabajoDesconectado(AULA_FILE, PRODUCTO_FILE, MARCAJE_FILE);
+                case 2 -> datos.guardarDatosTrabajoDesconectado(AULA_FILE, PRODUCTO_FILE, MARCAJE_FILE);
                 case 3 -> {
                     // Lógica para cargar datos de Base de Datos
                 }
@@ -47,10 +38,6 @@ public class GestorDatos {
             }
         }
     }
-
-    
-
-    
 
     private static void cargarDatosBaseDeDatos() {
         // Implementa aquí la lógica para cargar datos de la base de datos
