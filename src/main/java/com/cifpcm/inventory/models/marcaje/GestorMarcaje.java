@@ -1,18 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.cifpcm.inventory.models.marcaje;
 
 import com.cifpcm.inventory.mediator.MediatorInterface;
 import com.cifpcm.inventory.models.aula.Aula;
+import com.cifpcm.inventory.models.aula.AulaManager;
 import com.cifpcm.inventory.models.producto.Producto;
-import com.cifpcm.inventory.utils.Confirm;
+import com.cifpcm.inventory.models.producto.ProductoManager;
+import com.cifpcm.inventory.models.producto.ProductoManagerInterface;
 import com.cifpcm.inventory.utils.Menu;
+import com.cifpcm.inventory.utils.VerificarEntrada;
 
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,30 +21,40 @@ import java.util.List;
  */
 public class GestorMarcaje {
 
-    public GestorMarcaje(MediatorInterface mediator) {
+    private final MarcajeManager marcajeManager;
+    private final AulaManager aulaManager;
+    private ProductoManagerInterface productoManager;
+    
+    public GestorMarcaje() {
+    this.marcajeManager = new MarcajeManager();
+    this.aulaManager = new AulaManager();
+    this.productoManager = new ProductoManager(new ArrayList<>());
+}
+    public GestorMarcaje(ProductoManagerInterface productoManager) {
+    this.marcajeManager = new MarcajeManager();
+    this.aulaManager = new AulaManager();
+    this.productoManager = productoManager;
+}
 
-    }
-
-    public static void showMenuMarcajes() {
-        Marcaje marcaje = new Marcaje();
-        Aula aula = new Aula();
-        Producto producto = new Producto();
+    public void showMenuMarcajes() {
         int option;
+
         do {
             System.out.println(Menu.showSpecific("Marcaje"));
-            option = Menu.getInt();
+            option = VerificarEntrada.getInt("Selecciona una opción: ");
+
             switch (option) {
                 case 1 -> {
-                    List<Integer> aulasDisponibles = aula.selectAllAulas().stream().map(Aula::getIdAula).toList();
-                    List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(Producto::getIdProducto).toList();
+                    List<Integer> aulasDisponibles = aulaManager.selectAllAulas().stream().map(Aula::getIdAula).toList();
+                    List<Integer> productosDisponibles = productoManager.selectAllProductos().stream().map(Producto::getIdProducto).toList();
 
-                    System.out.print("Aulas: ");
+                    System.out.print("Aulas disponibles: ");
                     aulasDisponibles.forEach(id -> System.out.print(id + " "));
                     System.out.println();
 
                     int idAula = getValidId("Introduce el id del aula: ", aulasDisponibles);
 
-                    System.out.print("Productos: ");
+                    System.out.print("Productos disponibles: ");
                     productosDisponibles.forEach(id -> System.out.print(id + " "));
                     System.out.println();
 
@@ -54,33 +64,34 @@ public class GestorMarcaje {
 
                     TipoMarcaje tipoMarcaje = Menu.getTipoMarcaje();
 
-                    marcaje.insertMarcaje(new Marcaje(idProducto, idAula, newFecha, tipoMarcaje));
+                    Marcaje marcaje = new Marcaje(idProducto, idAula, newFecha, tipoMarcaje);
+                    marcajeManager.insertMarcaje(marcaje);
                 }
-                case 2 ->marcaje.selectAllMarcajes().forEach(System.out::println);
+                case 2 -> marcajeManager.getAllMarcajes().forEach(System.out::println);
 
                 case 3 -> {
-                    int idMarcaje = Menu.getInt("Introduce el id del marcaje a eliminar: ");
-                    boolean confirm = Confirm.getConfirmation("¿Estás seguro de que deseas eliminar el marcaje con ID " + idMarcaje + "? (s/n): ");
+                    int idMarcaje = VerificarEntrada.getInt("Introduce el id del marcaje a eliminar: ");
+                    boolean confirm = getConfirmation("¿Estás seguro de que deseas eliminar el marcaje con ID " + idMarcaje + "? (s/n): ");
                     if (confirm) {
-                        marcaje.deleteMarcaje(idMarcaje);
+                        marcajeManager.deleteMarcaje(idMarcaje);
                         System.out.println("Marcaje eliminado.");
                     } else {
                         System.out.println("Operación cancelada.");
                     }
-                    marcaje.selectAllMarcajes().forEach(System.out::println);
+                    marcajeManager.getAllMarcajes().forEach(System.out::println);
                 }
                 case 4 -> {
-                    int idMarcaje = Menu.getInt("Introduce el id del marcaje a modificar: ");
-                    List<Integer> aulasDisponibles = aula.selectAllAulas().stream().map(Aula::getIdAula).toList();
-                    List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(Producto::getIdProducto).toList();
+                    int idMarcaje = VerificarEntrada.getInt("Introduce el id del marcaje a modificar: ");
+                    List<Integer> aulasDisponibles = aulaManager.selectAllAulas().stream().map(Aula::getIdAula).toList();
+                    List<Integer> productosDisponibles = productoManager.selectAllProductos().stream().map(Producto::getIdProducto).toList();
 
-                    System.out.print("Aulas: ");
+                    System.out.print("Aulas disponibles: ");
                     aulasDisponibles.forEach(id -> System.out.print(id + " "));
                     System.out.println();
 
                     int idAula = getValidId("Introduce el id del aula: ", aulasDisponibles);
 
-                    System.out.print("Productos: ");
+                    System.out.print("Productos disponibles: ");
                     productosDisponibles.forEach(id -> System.out.print(id + " "));
                     System.out.println();
 
@@ -90,18 +101,19 @@ public class GestorMarcaje {
 
                     TipoMarcaje tipoMarcaje = Menu.getTipoMarcaje();
 
-                    marcaje.updateMarcaje(new Marcaje(idMarcaje, idProducto, idAula, newFecha, tipoMarcaje));
+                    Marcaje marcaje = new Marcaje(idMarcaje, idProducto, idAula, newFecha, tipoMarcaje);
+                    marcajeManager.updateMarcaje(marcaje);
                 }
-                case 0 -> System.out.println("Back");
-                default -> System.out.println("Opción inválida. Porfavor intenta de nuevo.");
+                case 0 -> System.out.println("Volviendo al menú principal...");
+                default -> System.out.println("Opción inválida. Por favor, inténtalo de nuevo.");
             }
         } while (option != 0);
     }
 
-    private static int getValidId(String prompt, List<Integer> validIds) {
+    private int getValidId(String prompt, List<Integer> validIds) {
         int id;
         do {
-            id = Menu.getInt(prompt);
+            id = VerificarEntrada.getInt(prompt);
             if (!validIds.contains(id)) {
                 System.out.println("ID inválido. Por favor, introduce un ID de la lista.");
             }
@@ -109,21 +121,33 @@ public class GestorMarcaje {
         return id;
     }
 
-    private static Date getValidDate() {
-        String dateString;
-        Date date = null;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        format.setLenient(false);
-        boolean valid = false;
-        while (!valid) {
-            dateString = Menu.getString("Introduce la fecha del marcaje (yyyy-MM-dd): ");
-            try {
-                date = new Date(format.parse(dateString).getTime());
-                valid = true;
-            } catch (ParseException e) {
-                System.out.println("Fecha inválida. Por favor, introduce una fecha en el formato yyyy-MM-dd.");
-            }
+    private Date getValidDate() {
+    String dateString;
+    Date date = null;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    format.setLenient(false);
+    boolean valid = false;
+    while (!valid) {
+        dateString = VerificarEntrada.getString("Introduce la fecha del marcaje (yyyy-MM-dd HH:mm:ss): ");
+        try {
+            date = (Date) format.parse(dateString);
+            valid = true;
+        } catch (ParseException e) {
+            System.out.println("Fecha inválida. Por favor, introduce una fecha en el formato yyyy-MM-dd HH:mm:ss.");
         }
-        return date;
     }
+    return date;
+}
+
+    private boolean getConfirmation(String prompt) {
+        String input;
+        do {
+            input = VerificarEntrada.getString(prompt).toLowerCase();
+            if (!input.equals("s") && !input.equals("n")) {
+                System.out.println("Por favor, introduce 's' para sí o 'n' para no.");
+            }
+        } while (!input.equals("s") && !input.equals("n"));
+        return input.equals("s");
+    }
+   
 }

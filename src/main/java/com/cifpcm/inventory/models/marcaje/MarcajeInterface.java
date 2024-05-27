@@ -2,6 +2,7 @@ package com.cifpcm.inventory.models.marcaje;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public interface MarcajeInterface {
     int getIdMarcaje();
@@ -9,10 +10,10 @@ public interface MarcajeInterface {
     int getIdAula();
     Date getTimeStamp();
     TipoMarcaje getTipo();
+    String getDescripcionProducto();
+
+   
      
-    public boolean insertMarcaje(MarcajeInterface marcaje);
-    public boolean updateMarcaje(MarcajeInterface marcaje); 
-    public boolean deleteMarcaje(int id); 
-    public MarcajeInterface selectMarcaje(int id);
-    public ArrayList<MarcajeInterface> selectAllMarcajes();
+
+    
 }
