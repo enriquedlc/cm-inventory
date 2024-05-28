@@ -100,6 +100,7 @@ public class Mediator implements MediatorInterface {
         GestorAulaFileSystem gestorAulaFileSystem = new GestorAulaFileSystem(mediator);
         GestorProductoFileSystem gestorProductoFileSystem = new GestorProductoFileSystem(mediator);
         GestorMarcajeFileSystem gestorMarcajeFileSystem = new GestorMarcajeFileSystem(mediator);
+        GestorReportes gestorReportes = new GestorReportes(mediator);
         while (true) {
             System.out.println("Menu");
             System.out.println("1 - Gestión Aulas.");
@@ -115,7 +116,7 @@ public class Mediator implements MediatorInterface {
                 case 1 -> gestorAulaFileSystem.showMenu();
                 case 2 -> gestorProductoFileSystem.showMenu();
                 case 3 -> gestorMarcajeFileSystem.showMenu();
-                case 4 -> GestorReportes.generateReports(mediator, scanner);
+                case 4 -> gestorReportes.generateReports();
                 case 5 -> {
                     try {
                         gestorDatos.manageData(scanner);

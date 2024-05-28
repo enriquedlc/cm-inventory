@@ -20,19 +20,28 @@ public class GestorAulaFileSystem {
                 case 1 -> {
                     String numeracion = Menu.getString("Introduce la numeración del aula: ");
                     String descripcion = Menu.getString("Introduce la descripción del aula: ");
-                    String ip = Menu.getString("Introduce la IP del aula: ");
-                    aulaFileSystem.insertAula(new AulaFileSystem(numeracion, descripcion, ip));
+                    String ip = Menu.verificarIp("Introduce la IP del aula: ");
+                    boolean added = aulaFileSystem.insertAula(new AulaFileSystem(numeracion, descripcion, ip));
+                    System.out.println(added ? "Aula añadida." : "No se pudo añadir el aula.");
                     aulaFileSystem.selectAllAulas().forEach(System.out::println);
                 }
                 case 2 -> aulaFileSystem.selectAllAulas().forEach(System.out::println);
                 case 3 -> {
                     aulaFileSystem.selectAllAulas().forEach(System.out::println);
                     int idAula = Menu.getInt("Introduce el id del aula a eliminar: ");
-                    boolean deleted = aulaFileSystem.deleteAula(idAula);
-                    if (deleted) {
-                        System.out.println("Aula eliminada.");
+
+                    boolean hasMarcajes = mediator.getMarcajes().stream()
+                            .anyMatch(marcaje -> marcaje.getIdAula() == idAula);
+
+                    if (hasMarcajes) {
+                        System.out.println("No se ha podido eliminar el aula debido a que tiene marcajes existentes.");
                     } else {
-                        System.out.println("No se pudo eliminar el aula.");
+                        boolean deleted = aulaFileSystem.deleteAula(idAula);
+                        if (deleted) {
+                            System.out.println("Aula eliminada.");
+                        } else {
+                            System.out.println("No se pudo eliminar el aula.");
+                        }
                     }
                     aulaFileSystem.selectAllAulas().forEach(System.out::println);
                 }
@@ -41,8 +50,9 @@ public class GestorAulaFileSystem {
                     int idAula = Menu.getInt("Introduce el id del aula a modificar: ");
                     String numeracion = Menu.getString("Introduce la numeración del aula: ");
                     String descripcion = Menu.getString("Introduce la descripción del aula: ");
-                    String ip = Menu.getString("Introduce la IP del aula: ");
-                    aulaFileSystem.updateAula(new AulaFileSystem(idAula, numeracion, descripcion, ip));
+                    String ip = Menu.verificarIp("Introduce la IP del aula: ");
+                    boolean updated = aulaFileSystem.updateAula(new AulaFileSystem(idAula, numeracion, descripcion, ip));
+                    System.out.println(updated ? "Aula actualizada." : "No se pudo actualizar el aula.");
                     aulaFileSystem.selectAllAulas().forEach(System.out::println);
                 }
                 case 0 -> System.out.println("Back");

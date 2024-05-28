@@ -21,8 +21,9 @@ public class GestorAulaDatabase {
                 case 1 -> {
                     String numeracion = Menu.getString("Introduce la numeración del aula: ");
                     String descripcion = Menu.getString("Introduce la descripción del aula: ");
-                    String ip = Menu.getString("Introduce la IP del aula: ");
-                    aulaDatabase.insertAula(new AulaDatabase(mediator, numeracion, descripcion, ip));
+                    String ip = Menu.verificarIp("Introduce la IP del aula: ");
+                    boolean added = aulaDatabase.insertAula(new AulaDatabase(mediator, numeracion, descripcion, ip));
+                    System.out.println(added ? "Aula añadida." : "No se pudo añadir el aula.");
                     aulaDatabase.selectAllAulas().forEach(System.out::println);
                 }
                 case 2 ->
@@ -47,8 +48,13 @@ public class GestorAulaDatabase {
                     int idAula = Menu.getInt("Introduce el id del aula a modificar: ");
                     String numeracion = Menu.getString("Introduce la numeración del aula: ");
                     String descripcion = Menu.getString("Introduce la descripción del aula: ");
-                    String ip = Menu.getString("Introduce la IP del aula: ");
-                    aulaDatabase.updateAula(new AulaDatabase(mediator, idAula, numeracion, descripcion, ip));
+                    String ip = Menu.verificarIp("Introduce la IP del aula: ");
+                    boolean updated = aulaDatabase.updateAula(new AulaDatabase(mediator, idAula, numeracion, descripcion, ip));
+                    if (updated) {
+                        System.out.println("Aula actualizada.");
+                    } else {
+                        System.out.println("No se pudo actualizar el aula.");
+                    }
                     aulaDatabase.selectAllAulas().forEach(System.out::println);
                 }
                 case 0 ->

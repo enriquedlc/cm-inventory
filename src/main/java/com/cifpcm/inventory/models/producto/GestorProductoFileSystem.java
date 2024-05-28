@@ -1,6 +1,7 @@
 package com.cifpcm.inventory.models.producto;
 
 import com.cifpcm.inventory.mediator.Mediator;
+import com.cifpcm.inventory.utils.Confirm;
 import com.cifpcm.inventory.utils.Menu;
 
 public class GestorProductoFileSystem {
@@ -28,11 +29,18 @@ public class GestorProductoFileSystem {
                 case 3 -> {
                     producto.selectAllProductos().forEach(System.out::println);
                     int idProducto = Menu.getInt("Introduce el id del producto a eliminar: ");
-                    boolean deleted = producto.deleteProducto(idProducto);
-                    if (deleted) {
-                        System.out.println("Producto eliminado.");
+                    System.out.println("Advertencia: Eliminar este producto también eliminará todos los marcajes asociados.");
+                    boolean confirm = Confirm.getConfirmation("¿Está seguro de que desea eliminar este producto y todos sus marcajes asociados? (S/N): ");
+                    if (confirm) {
+                        boolean deleted = producto.deleteProducto(idProducto);
+                        if (deleted) {
+                            eliminarMarcajesAsociados(idProducto);
+                            System.out.println("Producto y todos sus marcajes asociados eliminados.");
+                        } else {
+                            System.out.println("No se pudo eliminar el producto.");
+                        }
                     } else {
-                        System.out.println("No se pudo eliminar el producto.");
+                        System.out.println("Operación cancelada.");
                     }
                     producto.selectAllProductos().forEach(System.out::println);
                 }
@@ -49,5 +57,9 @@ public class GestorProductoFileSystem {
                 default -> System.out.println("Opción inválida. Porfavor intenta de nuevo.");
             }
         } while (option != 0);
+    }
+
+    private void eliminarMarcajesAsociados(int idProducto) {
+        mediator.getMarcajes().removeIf(marcaje -> marcaje.getIdProducto() == idProducto);
     }
 }

@@ -48,7 +48,7 @@ public class GestorMarcajeFileSystem {
 
                     marcaje.insertMarcaje(new MarcajeDatabase(idProducto, idAula, newFecha, tipoMarcaje));
                 }
-                case 2 ->marcaje.selectAllMarcajes().forEach(System.out::println);
+                case 2 -> marcaje.selectAllMarcajes().forEach(System.out::println);
 
                 case 3 -> {
                     int idMarcaje = Menu.getInt("Introduce el id del marcaje a eliminar: ");
