@@ -8,9 +8,9 @@ public interface AulaInterface {
     String getDescripcion();
     String getIp();
     
-    public boolean insertAula(Aula aula);
-    public boolean updateAula(Aula aula); 
+    public boolean insertAula(AulaInterface aulaDatabase);
+    public boolean updateAula(AulaInterface aulaDatabase);
     public boolean deleteAula(int id); 
-    public Aula selectAula(int id);
-    public ArrayList<Aula> selectAllAulas();
+    public AulaInterface selectAula(int id);
+    public ArrayList<AulaInterface> selectAllAulas();
 }

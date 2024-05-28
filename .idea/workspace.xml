@@ -5,26 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d617f631-5092-4ab7-91d1-eda4c6048e2f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/AulaFileSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/GestorAulaFileSystem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aula.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/marcajes.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/productos.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/data/Datos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/data/Datos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/data/GestorDatos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/data/GestorDatos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/mediator/Mediator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/Aula.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/AulaDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/AulaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/AulaInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/GestorAula.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/aula/GestorAulaDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/GestorMarcaje.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/GestorMarcaje.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/Marcaje.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/models/marcaje/Marcaje.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/data/Datos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/data/Datos.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/data/GestorDatos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/data/GestorDatos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/mediator/Mediator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/aula/Aula.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/aula/AulaInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/aula/AulaInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/aula/GestorAula.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/marcaje/GestorMarcaje.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/marcaje/GestorMarcaje.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/marcaje/Marcaje.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cifpcm/inventory/models/marcaje/Marcaje.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2gt5OwlRVXgumBchyPNJSwu6Ckl" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,8 +53,10 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "checkpoint-mediator",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -64,20 +85,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/cifpcm/inventory/data/Datos.java</url>
-          <line>96</line>
-          <properties class="com.cifpcm.inventory.data.Datos" method="cargarMarcajesDesdeCSV">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

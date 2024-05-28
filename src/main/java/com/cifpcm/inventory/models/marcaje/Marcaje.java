@@ -2,7 +2,7 @@ package com.cifpcm.inventory.models.marcaje;
 
 import com.cifpcm.inventory.database.ConnectionDb;
 import com.cifpcm.inventory.database.SQLBuilder;
-import com.cifpcm.inventory.models.aula.Aula;
+import com.cifpcm.inventory.models.aula.AulaDatabase;
 import com.cifpcm.inventory.models.producto.Producto;
 
 import java.sql.Connection;
@@ -71,10 +71,10 @@ public class Marcaje implements MarcajeInterface {
 
     @Override
     public boolean insertMarcaje(MarcajeInterface marcaje) {
-        Aula aula = new Aula();
+        AulaDatabase aulaDatabase = new AulaDatabase();
     Producto producto = new Producto();
 
-    if (!aula.exists(marcaje.getIdAula())) {
+    if (!aulaDatabase.exists(marcaje.getIdAula())) {
         System.out.println("El aula con ID " + marcaje.getIdAula() + " no existe.");
         return false;
     }

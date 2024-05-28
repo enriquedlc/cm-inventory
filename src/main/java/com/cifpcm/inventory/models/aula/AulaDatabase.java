@@ -2,6 +2,7 @@ package com.cifpcm.inventory.models.aula;
 
 import com.cifpcm.inventory.database.ConnectionDb;
 import com.cifpcm.inventory.database.SQLBuilder;
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.models.marcaje.Marcaje;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,29 +10,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Aula implements AulaInterface {
+public class AulaDatabase implements AulaInterface {
+    private Mediator mediator;
     private int idAula;
     private  String numeracion;
     private String descripcion;
     private String ip;
     
-    public Aula(String numeracion, String descripcion, String ip) {
+    public AulaDatabase(Mediator mediator, String numeracion, String descripcion, String ip) {
+        this.mediator = mediator;
         this.numeracion = numeracion;
         this.descripcion = descripcion;
         this.ip = ip;
     }
     
-    public Aula(int idAula, String numeracion, String descripcion, String ip) {
+    public AulaDatabase(Mediator mediator, int idAula, String numeracion, String descripcion, String ip) {
+        this.mediator = mediator;
         this.idAula = idAula;
         this.numeracion = numeracion;
         this.descripcion = descripcion;
         this.ip = ip;
     }
 
-    public Aula() {}
+    public AulaDatabase() {}
 
     @Override
-    public boolean insertAula(Aula aula) {
+    public boolean insertAula(AulaInterface aula) {
         String sql = SQLBuilder.getINSERT_AULA_SQL();
         boolean rowInserted = false;
         try (Connection connection = ConnectionDb.get();
@@ -47,7 +51,7 @@ public class Aula implements AulaInterface {
     }
 
     @Override
-    public boolean updateAula(Aula aula) {
+    public boolean updateAula(AulaInterface aula) {
         String sql = SQLBuilder.getUPDATE_AULA_SQL();
         boolean rowUpdated = false;
         try (Connection connection = ConnectionDb.get();
@@ -86,9 +90,9 @@ public class Aula implements AulaInterface {
     }
 
     @Override
-    public Aula selectAula(int id) {
+    public AulaDatabase selectAula(int id) {
         String sql = SQLBuilder.getSELECT_AULA_BY_ID();
-        Aula aula = null;
+        AulaDatabase aulaDatabase = null;
         try (Connection connection = ConnectionDb.get();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
@@ -97,18 +101,18 @@ public class Aula implements AulaInterface {
                 String numeracion = result.getString("numeracion");
                 String descripcion = result.getString("descripcion");
                 String ip = result.getString("ip");
-                aula = new Aula(idAula, numeracion, descripcion, ip);
+                aulaDatabase = new AulaDatabase(mediator, idAula, numeracion, descripcion, ip);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return aula;
+        return aulaDatabase;
     }
 
     @Override
-    public ArrayList<Aula> selectAllAulas() {
+    public ArrayList<AulaInterface> selectAllAulas() {
         String sql = SQLBuilder.getSELECT_ALL_AULAS();
-        ArrayList<Aula> aulas = new ArrayList<>();
+        ArrayList<AulaInterface> aulaDatabases = new ArrayList<>();
         try (Connection connection = ConnectionDb.get();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet result = preparedStatement.executeQuery()) {
@@ -117,12 +121,12 @@ public class Aula implements AulaInterface {
                 String numeracion = result.getString("numeracion");
                 String descripcion = result.getString("descripcion");
                 String ip = result.getString("ip");
-                aulas.add(new Aula(idAula, numeracion, descripcion, ip));
+                aulaDatabases.add(new AulaDatabase(this.mediator, idAula, numeracion, descripcion, ip));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return aulas;
+        return aulaDatabases;
     }
     public boolean exists(int idAula) {
     String sql = SQLBuilder.getEXISTS_AULA_SQL();

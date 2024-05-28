@@ -5,7 +5,8 @@
 package com.cifpcm.inventory.models.marcaje;
 
 import com.cifpcm.inventory.mediator.MediatorInterface;
-import com.cifpcm.inventory.models.aula.Aula;
+import com.cifpcm.inventory.models.aula.AulaDatabase;
+import com.cifpcm.inventory.models.aula.AulaInterface;
 import com.cifpcm.inventory.models.producto.Producto;
 import com.cifpcm.inventory.utils.Confirm;
 import com.cifpcm.inventory.utils.Menu;
@@ -27,7 +28,7 @@ public class GestorMarcaje {
 
     public static void showMenuMarcajes() {
         Marcaje marcaje = new Marcaje();
-        Aula aula = new Aula();
+        AulaDatabase aulaDatabase = new AulaDatabase();
         Producto producto = new Producto();
         int option;
         do {
@@ -35,7 +36,7 @@ public class GestorMarcaje {
             option = Menu.getInt();
             switch (option) {
                 case 1 -> {
-                    List<Integer> aulasDisponibles = aula.selectAllAulas().stream().map(Aula::getIdAula).toList();
+                    List<Integer> aulasDisponibles = aulaDatabase.selectAllAulas().stream().map(AulaInterface::getIdAula).toList();
                     List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(Producto::getIdProducto).toList();
 
                     System.out.print("Aulas: ");
@@ -71,7 +72,7 @@ public class GestorMarcaje {
                 }
                 case 4 -> {
                     int idMarcaje = Menu.getInt("Introduce el id del marcaje a modificar: ");
-                    List<Integer> aulasDisponibles = aula.selectAllAulas().stream().map(Aula::getIdAula).toList();
+                    List<Integer> aulasDisponibles = aulaDatabase.selectAllAulas().stream().map(AulaInterface::getIdAula).toList();
                     List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(Producto::getIdProducto).toList();
 
                     System.out.print("Aulas: ");

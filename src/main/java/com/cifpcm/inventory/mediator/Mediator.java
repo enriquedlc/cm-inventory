@@ -1,15 +1,12 @@
 package com.cifpcm.inventory.mediator;
 
-import com.cifpcm.inventory.models.aula.Aula;
-import com.cifpcm.inventory.models.marcaje.Marcaje;
-import com.cifpcm.inventory.models.producto.Producto;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import com.cifpcm.inventory.models.aula.AulaInterface;
-import com.cifpcm.inventory.models.aula.GestorAula;
+import com.cifpcm.inventory.models.aula.GestorAulaDatabase;
 
+import com.cifpcm.inventory.models.aula.GestorAulaFileSystem;
 import com.cifpcm.inventory.models.marcaje.GestorMarcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 import com.cifpcm.inventory.models.producto.GestorProducto;
@@ -24,12 +21,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Mediator implements MediatorInterface {
-   
     private final List<AulaInterface> aulas = new ArrayList<>();
     private final List<ProductoInterface> productos = new ArrayList<>();
     private final List<MarcajeInterface> marcajes = new ArrayList<>();
-    
-    
+
+    public void addAula(AulaInterface aula) {
+        aulas.add(aula);
+    }
+
+    public void addProducto(ProductoInterface producto) {
+        productos.add(producto);
+    }
+
+    public void addMarcaje(MarcajeInterface marcaje) {
+        marcajes.add(marcaje);
+    }
+
+    public List<AulaInterface> getAulas() {
+        return aulas;
+    }
+
+    public List<ProductoInterface> getProductos() {
+        return productos;
+    }
+
+    public List<MarcajeInterface> getMarcajes() {
+        return marcajes;
+    }
+
     public List<MarcajeInterface> getMarcajesByProducto(int idProducto, Date fechaInicio, Date fechaFin) {
         List<MarcajeInterface> result = new ArrayList<>();
         for (MarcajeInterface marcaje : marcajes) {
@@ -41,7 +60,7 @@ public class Mediator implements MediatorInterface {
         }
         return result;
     }
-    
+
     public List<MarcajeInterface> getMarcajesByAula(int idAula, Date fechaInicio, Date fechaFin) {
         List<MarcajeInterface> result = new ArrayList<>();
         for (MarcajeInterface marcaje : marcajes) {
@@ -53,11 +72,12 @@ public class Mediator implements MediatorInterface {
         }
         return result;
     }
-    
-   
+
     public void inicio() {
         Scanner scanner = new Scanner(System.in);
-        Datos datos = new Datos();
+        Mediator mediator = new Mediator();
+        GestorDatos gestorDatos = new GestorDatos(mediator);
+        GestorAulaFileSystem gestorAulaFileSystem = new GestorAulaFileSystem(mediator);
         while (true) {
             System.out.println("Menu");
             System.out.println("1 - Gestión Aulas.");
@@ -70,31 +90,20 @@ public class Mediator implements MediatorInterface {
             int option = scanner.nextInt();
 
             switch (option) {
-                case 1 ->
-                    GestorAula.showMenuAulas();
-                case 2 ->
-                    GestorProducto.showMenuProductos();
-                case 3 ->
-                    GestorMarcaje.showMenuMarcajes();
-                case 4 ->
-                    GestorReportes.generateReports(this, scanner);
-                case 5 ->
-                {
+                case 1 -> gestorAulaFileSystem.showMenuAulasFileSystem();
+                case 2 -> GestorProducto.showMenuProductos();
+                case 3 -> GestorMarcaje.showMenuMarcajes();
+                case 4 -> GestorReportes.generateReports(mediator, scanner);
+                case 5 -> {
                     try {
-                        GestorDatos.manageData(this, scanner, datos);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Mediator.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
+                        gestorDatos.manageData(scanner);
+                    } catch (IOException | ClassNotFoundException ex) {
                         Logger.getLogger(Mediator.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-
-                case 0 ->
-                    System.exit(0);
-                default ->
-                    System.out.println("Opción no válida.");
+                case 0 -> System.exit(0);
+                default -> System.out.println("Opción no válida.");
             }
         }
     }
-
 }
