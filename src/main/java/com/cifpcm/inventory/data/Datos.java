@@ -5,8 +5,8 @@ import com.cifpcm.inventory.models.aula.AulaDatabase;
 import com.cifpcm.inventory.models.aula.AulaInterface;
 import com.cifpcm.inventory.models.marcaje.Marcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
-import com.cifpcm.inventory.models.marcaje.TipoMarcaje;
-import com.cifpcm.inventory.models.producto.Producto;
+import com.cifpcm.inventory.models.marcaje.enums.TipoMarcaje;
+import com.cifpcm.inventory.models.producto.ProductoDatabase;
 import com.cifpcm.inventory.models.producto.ProductoInterface;
 
 import java.io.*;
@@ -22,6 +22,7 @@ public class Datos {
     }
 
     private void cargarAulasDesdeCSV(String aulaFile) throws IOException {
+        mediator.getAulas().clear();
         try (BufferedReader br = new BufferedReader(new FileReader(aulaFile))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -36,6 +37,7 @@ public class Datos {
     }
 
     public void cargarProductosDesdeCSV(String productoFile) throws IOException {
+        mediator.getProductos().clear();
         try (BufferedReader br = new BufferedReader(new FileReader(productoFile))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -44,7 +46,7 @@ public class Datos {
                     String descripcion = fields[0];
                     String ean = fields[1];
                     String keyRFID = fields[2];
-                    Producto producto = new Producto(descripcion, ean, keyRFID);
+                    ProductoDatabase producto = new ProductoDatabase(descripcion, ean, keyRFID);
                     mediator.addProducto(producto);
                 } else {
                     System.out.println("Línea inválida en el archivo: " + line);
@@ -54,6 +56,7 @@ public class Datos {
     }
 
     private void cargarMarcajesDesdeCSV(String marcajeFile) throws IOException {
+        mediator.getMarcajes().clear();
         try (BufferedReader br = new BufferedReader(new FileReader(marcajeFile))) {
             String line;
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

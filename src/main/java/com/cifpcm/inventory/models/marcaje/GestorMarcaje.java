@@ -7,7 +7,9 @@ package com.cifpcm.inventory.models.marcaje;
 import com.cifpcm.inventory.mediator.MediatorInterface;
 import com.cifpcm.inventory.models.aula.AulaDatabase;
 import com.cifpcm.inventory.models.aula.AulaInterface;
-import com.cifpcm.inventory.models.producto.Producto;
+import com.cifpcm.inventory.models.marcaje.enums.TipoMarcaje;
+import com.cifpcm.inventory.models.producto.ProductoDatabase;
+import com.cifpcm.inventory.models.producto.ProductoInterface;
 import com.cifpcm.inventory.utils.Confirm;
 import com.cifpcm.inventory.utils.Menu;
 
@@ -29,7 +31,7 @@ public class GestorMarcaje {
     public static void showMenuMarcajes() {
         Marcaje marcaje = new Marcaje();
         AulaDatabase aulaDatabase = new AulaDatabase();
-        Producto producto = new Producto();
+        ProductoDatabase producto = new ProductoDatabase();
         int option;
         do {
             System.out.println(Menu.showSpecific("Marcaje"));
@@ -37,7 +39,7 @@ public class GestorMarcaje {
             switch (option) {
                 case 1 -> {
                     List<Integer> aulasDisponibles = aulaDatabase.selectAllAulas().stream().map(AulaInterface::getIdAula).toList();
-                    List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(Producto::getIdProducto).toList();
+                    List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(ProductoInterface::getIdProducto).toList();
 
                     System.out.print("Aulas: ");
                     aulasDisponibles.forEach(id -> System.out.print(id + " "));
@@ -73,7 +75,7 @@ public class GestorMarcaje {
                 case 4 -> {
                     int idMarcaje = Menu.getInt("Introduce el id del marcaje a modificar: ");
                     List<Integer> aulasDisponibles = aulaDatabase.selectAllAulas().stream().map(AulaInterface::getIdAula).toList();
-                    List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(Producto::getIdProducto).toList();
+                    List<Integer> productosDisponibles = producto.selectAllProductos().stream().map(ProductoInterface::getIdProducto).toList();
 
                     System.out.print("Aulas: ");
                     aulasDisponibles.forEach(id -> System.out.print(id + " "));

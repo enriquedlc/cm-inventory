@@ -1,6 +1,6 @@
 package com.cifpcm.inventory.utils;
 
-import com.cifpcm.inventory.models.marcaje.TipoMarcaje;
+import com.cifpcm.inventory.models.marcaje.enums.TipoMarcaje;
 
 import java.util.Scanner;
 

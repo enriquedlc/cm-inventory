@@ -8,10 +8,10 @@ public interface ProductoInterface {
     String getEan();
     String getKeyRFID();
     
-    public boolean insertProducto(Producto producto);
-    public boolean updateProducto(Producto producto); 
+    public boolean insertProducto(ProductoInterface producto);
+    public boolean updateProducto(ProductoInterface producto);
     public boolean deleteProducto(int id); 
-    public Producto selectProducto(int id);
-    public ArrayList<Producto> selectAllProductos();
+    public ProductoInterface selectProducto(int id);
+    public ArrayList<ProductoInterface> selectAllProductos();
 
 }

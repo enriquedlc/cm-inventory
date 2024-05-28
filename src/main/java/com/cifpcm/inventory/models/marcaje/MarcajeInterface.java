@@ -1,5 +1,7 @@
 package com.cifpcm.inventory.models.marcaje;
 
+import com.cifpcm.inventory.models.marcaje.enums.TipoMarcaje;
+
 import java.util.ArrayList;
 import java.util.Date;
 

@@ -9,7 +9,7 @@ public class GestorAulaFileSystem {
         GestorAulaFileSystem.mediator = mediator;
     }
 
-    public void showMenuAulasFileSystem(){
+    public void showMenu(){
         AulaFileSystem aulaFileSystem = new AulaFileSystem(mediator);
         int option;
 
@@ -21,7 +21,7 @@ public class GestorAulaFileSystem {
                     String numeracion = Menu.getString("Introduce la numeración del aula: ");
                     String descripcion = Menu.getString("Introduce la descripción del aula: ");
                     String ip = Menu.getString("Introduce la IP del aula: ");
-                    aulaFileSystem.insertAula(new AulaFileSystem(mediator, numeracion, descripcion, ip));
+                    aulaFileSystem.insertAula(new AulaFileSystem(numeracion, descripcion, ip));
                     aulaFileSystem.selectAllAulas().forEach(System.out::println);
                 }
                 case 2 -> aulaFileSystem.selectAllAulas().forEach(System.out::println);
@@ -42,7 +42,7 @@ public class GestorAulaFileSystem {
                     String numeracion = Menu.getString("Introduce la numeración del aula: ");
                     String descripcion = Menu.getString("Introduce la descripción del aula: ");
                     String ip = Menu.getString("Introduce la IP del aula: ");
-                    aulaFileSystem.updateAula(new AulaFileSystem(mediator, idAula, numeracion, descripcion, ip));
+                    aulaFileSystem.updateAula(new AulaFileSystem(idAula, numeracion, descripcion, ip));
                     aulaFileSystem.selectAllAulas().forEach(System.out::println);
                 }
                 case 0 -> System.out.println("Back");

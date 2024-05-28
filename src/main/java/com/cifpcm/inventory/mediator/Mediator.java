@@ -4,16 +4,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import com.cifpcm.inventory.models.aula.AulaInterface;
-import com.cifpcm.inventory.models.aula.GestorAulaDatabase;
 
 import com.cifpcm.inventory.models.aula.GestorAulaFileSystem;
 import com.cifpcm.inventory.models.marcaje.GestorMarcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
-import com.cifpcm.inventory.models.producto.GestorProducto;
+import com.cifpcm.inventory.models.producto.GestorProductoFileSystem;
 import com.cifpcm.inventory.models.producto.ProductoInterface;
 
 import com.cifpcm.inventory.data.GestorDatos;
-import com.cifpcm.inventory.data.Datos;
 import com.cifpcm.inventory.reports.GestorReportes;
 import java.util.Date;
 import java.util.Scanner;
@@ -25,16 +23,16 @@ public class Mediator implements MediatorInterface {
     private final List<ProductoInterface> productos = new ArrayList<>();
     private final List<MarcajeInterface> marcajes = new ArrayList<>();
 
-    public void addAula(AulaInterface aula) {
-        aulas.add(aula);
+    public boolean addAula(AulaInterface aula) {
+        return aulas.add(aula);
     }
 
-    public void addProducto(ProductoInterface producto) {
-        productos.add(producto);
+    public boolean addProducto(ProductoInterface producto) {
+        return productos.add(producto);
     }
 
-    public void addMarcaje(MarcajeInterface marcaje) {
-        marcajes.add(marcaje);
+    public boolean addMarcaje(MarcajeInterface marcaje) {
+        return marcajes.add(marcaje);
     }
 
     public List<AulaInterface> getAulas() {
@@ -78,6 +76,7 @@ public class Mediator implements MediatorInterface {
         Mediator mediator = new Mediator();
         GestorDatos gestorDatos = new GestorDatos(mediator);
         GestorAulaFileSystem gestorAulaFileSystem = new GestorAulaFileSystem(mediator);
+        GestorProductoFileSystem gestorProductoFileSystem = new GestorProductoFileSystem(mediator);
         while (true) {
             System.out.println("Menu");
             System.out.println("1 - Gestión Aulas.");
@@ -90,8 +89,8 @@ public class Mediator implements MediatorInterface {
             int option = scanner.nextInt();
 
             switch (option) {
-                case 1 -> gestorAulaFileSystem.showMenuAulasFileSystem();
-                case 2 -> GestorProducto.showMenuProductos();
+                case 1 -> gestorAulaFileSystem.showMenu();
+                case 2 -> gestorProductoFileSystem.showMenu();
                 case 3 -> GestorMarcaje.showMenuMarcajes();
                 case 4 -> GestorReportes.generateReports(mediator, scanner);
                 case 5 -> {

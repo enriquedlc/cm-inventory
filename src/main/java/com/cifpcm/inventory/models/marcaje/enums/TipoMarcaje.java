@@ -1,4 +1,4 @@
-package com.cifpcm.inventory.models.marcaje;
+package com.cifpcm.inventory.models.marcaje.enums;
 
 public enum TipoMarcaje {
     ENTRADA("ENTRADA"), SALIDA("SALIDA");

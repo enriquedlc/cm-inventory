@@ -6,7 +6,7 @@ package com.cifpcm.inventory.models.producto;
 
 import com.cifpcm.inventory.mediator.MediatorInterface;
 import com.cifpcm.inventory.models.marcaje.Marcaje;
-import com.cifpcm.inventory.utils.Confirm;
+
 import static com.cifpcm.inventory.utils.Confirm.getConfirmation;
 import com.cifpcm.inventory.utils.Menu;
 
@@ -14,14 +14,14 @@ import com.cifpcm.inventory.utils.Menu;
  *
  * @author tecen
  */
-public class GestorProducto {
+public class GestorProductoDatabase {
 
-    public GestorProducto(MediatorInterface mediator) {
+    public GestorProductoDatabase(MediatorInterface mediator) {
 
     }
 
     public static void showMenuProductos() {
-        Producto producto = new Producto();
+        ProductoDatabase producto = new ProductoDatabase();
         int option;
         do {
             System.out.println(Menu.showSpecific("Producto"));
@@ -31,7 +31,7 @@ public class GestorProducto {
                     String ean = Menu.getString("Introduce el EAN del producto: ");
                     String descripcion = Menu.getString("Introduce la descripción del producto: ");
                     String keyRFID = Menu.getString("Introduce la clave RFID del producto: ");
-                    producto.insertProducto(new Producto(descripcion, ean, keyRFID));
+                    producto.insertProducto(new ProductoDatabase(descripcion, ean, keyRFID));
                     producto.selectAllProductos().forEach(System.out::println);
                 }
                 case 2 ->
@@ -67,7 +67,7 @@ public class GestorProducto {
                     String ean = Menu.getString("Introduce el EAN del producto: ");
                     String descripcion = Menu.getString("Introduce la descripción del producto: ");
                     String keyRFID = Menu.getString("Introduce la clave RFID del producto: ");
-                    producto.updateProducto(new Producto(idProducto, descripcion, ean, keyRFID));
+                    producto.updateProducto(new ProductoDatabase(idProducto, descripcion, ean, keyRFID));
                     producto.selectAllProductos().forEach(System.out::println);
                 }
                 case 0 ->

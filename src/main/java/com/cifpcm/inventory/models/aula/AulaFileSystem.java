@@ -9,22 +9,20 @@ public class AulaFileSystem implements AulaInterface {
     private  String numeracion;
     private String descripcion;
     private String ip;
-    private final Mediator mediator;
+    private Mediator mediator;
 
     public AulaFileSystem(Mediator mediator) {
         this.mediator = mediator;
     }
 
-    public AulaFileSystem(Mediator mediator, String numeracion, String descripcion, String ip) {
-        this.mediator = mediator;
+    public AulaFileSystem(int idAula, String numeracion, String descripcion, String ip) {
+        this.idAula = idAula;
         this.numeracion = numeracion;
         this.descripcion = descripcion;
         this.ip = ip;
     }
 
-    public AulaFileSystem(Mediator mediator, int idAula, String numeracion, String descripcion, String ip) {
-        this.mediator = mediator;
-        this.idAula = idAula;
+    public AulaFileSystem(String numeracion, String descripcion, String ip) {
         this.numeracion = numeracion;
         this.descripcion = descripcion;
         this.ip = ip;
@@ -52,8 +50,7 @@ public class AulaFileSystem implements AulaInterface {
 
     @Override
     public boolean insertAula(AulaInterface aula) {
-        mediator.addAula(aula);
-        return true;
+        return mediator.addAula(aula);
     }
 
     @Override
@@ -61,7 +58,6 @@ public class AulaFileSystem implements AulaInterface {
         ArrayList<AulaInterface> aulas = (ArrayList<AulaInterface>) mediator.getAulas();
         for (AulaInterface aula1 : aulas) {
             if (aula1.getIdAula() == aula.getIdAula()) {
-                aula1 = aula;
                 return true;
             }
         }
