@@ -5,7 +5,7 @@
 package com.cifpcm.inventory.models.producto;
 
 import com.cifpcm.inventory.mediator.MediatorInterface;
-import com.cifpcm.inventory.models.marcaje.Marcaje;
+import com.cifpcm.inventory.models.marcaje.MarcajeDatabase;
 
 import static com.cifpcm.inventory.utils.Confirm.getConfirmation;
 import com.cifpcm.inventory.utils.Menu;
@@ -41,7 +41,7 @@ public class GestorProductoDatabase {
                     boolean confirm = getConfirmation("¿Estás seguro de que deseas eliminar el producto con ID " + idProducto + "? (s/n): ");
                     if (confirm) {
                         // Primero, eliminar todos los marcajes asociados al producto
-                        Marcaje marcaje = new Marcaje();
+                        MarcajeDatabase marcaje = new MarcajeDatabase();
                         boolean marcajesEliminados = marcaje.deleteMarcajesByProducto(idProducto);
                         if (marcajesEliminados) {
                             System.out.println("Marcajes asociados eliminados.");

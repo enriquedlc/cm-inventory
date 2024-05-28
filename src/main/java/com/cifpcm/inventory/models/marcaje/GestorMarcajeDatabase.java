@@ -22,14 +22,14 @@ import java.util.List;
  *
  * @author tecen
  */
-public class GestorMarcaje {
+public class GestorMarcajeDatabase {
 
-    public GestorMarcaje(MediatorInterface mediator) {
+    public GestorMarcajeDatabase(MediatorInterface mediator) {
 
     }
 
     public static void showMenuMarcajes() {
-        Marcaje marcaje = new Marcaje();
+        MarcajeDatabase marcaje = new MarcajeDatabase();
         AulaDatabase aulaDatabase = new AulaDatabase();
         ProductoDatabase producto = new ProductoDatabase();
         int option;
@@ -57,9 +57,9 @@ public class GestorMarcaje {
 
                     TipoMarcaje tipoMarcaje = Menu.getTipoMarcaje();
 
-                    marcaje.insertMarcaje(new Marcaje(idProducto, idAula, newFecha, tipoMarcaje));
+                    marcaje.insertMarcaje(new MarcajeDatabase(idProducto, idAula, newFecha, tipoMarcaje));
                 }
-                case 2 ->marcaje.selectAllMarcajes().forEach(System.out::println);
+                case 2 -> marcaje.selectAllMarcajes().forEach(System.out::println);
 
                 case 3 -> {
                     int idMarcaje = Menu.getInt("Introduce el id del marcaje a eliminar: ");
@@ -93,7 +93,7 @@ public class GestorMarcaje {
 
                     TipoMarcaje tipoMarcaje = Menu.getTipoMarcaje();
 
-                    marcaje.updateMarcaje(new Marcaje(idMarcaje, idProducto, idAula, newFecha, tipoMarcaje));
+                    marcaje.updateMarcaje(new MarcajeDatabase(idMarcaje, idProducto, idAula, newFecha, tipoMarcaje));
                 }
                 case 0 -> System.out.println("Back");
                 default -> System.out.println("Opción inválida. Porfavor intenta de nuevo.");

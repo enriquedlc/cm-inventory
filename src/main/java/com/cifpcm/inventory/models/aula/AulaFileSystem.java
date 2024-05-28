@@ -94,7 +94,7 @@ public class AulaFileSystem implements AulaInterface {
 
     @Override
     public String toString() {
-        return "AulaFileSystem{" + "idAula=" + idAula + ", numeracion=" + numeracion + ", descripcion=" + descripcion + ", ip=" + ip + '}';
+        return "Aula{" + "idAula=" + idAula + ", numeracion=" + numeracion + ", descripcion=" + descripcion + ", ip=" + ip + '}';
     }
 
 }

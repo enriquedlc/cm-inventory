@@ -6,7 +6,7 @@ import java.util.List;
 import com.cifpcm.inventory.models.aula.AulaInterface;
 
 import com.cifpcm.inventory.models.aula.GestorAulaFileSystem;
-import com.cifpcm.inventory.models.marcaje.GestorMarcaje;
+import com.cifpcm.inventory.models.marcaje.GestorMarcajeFileSystem;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 import com.cifpcm.inventory.models.producto.GestorProductoFileSystem;
 import com.cifpcm.inventory.models.producto.ProductoInterface;
@@ -71,12 +71,35 @@ public class Mediator implements MediatorInterface {
         return result;
     }
 
+    public void clearLists() {
+        aulas.clear();
+        productos.clear();
+        marcajes.clear();
+    }
+
+    public void clearFiles() {
+        try {
+            FileWriter fileWriter = new FileWriter("aulas.txt");
+            fileWriter.write("");
+            fileWriter.close();
+            fileWriter = new FileWriter("productos.txt");
+            fileWriter.write("");
+            fileWriter.close();
+            fileWriter = new FileWriter("marcajes.txt");
+            fileWriter.write("");
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Mediator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void inicio() {
         Scanner scanner = new Scanner(System.in);
         Mediator mediator = new Mediator();
         GestorDatos gestorDatos = new GestorDatos(mediator);
         GestorAulaFileSystem gestorAulaFileSystem = new GestorAulaFileSystem(mediator);
         GestorProductoFileSystem gestorProductoFileSystem = new GestorProductoFileSystem(mediator);
+        GestorMarcajeFileSystem gestorMarcajeFileSystem = new GestorMarcajeFileSystem(mediator);
         while (true) {
             System.out.println("Menu");
             System.out.println("1 - Gestión Aulas.");
@@ -91,7 +114,7 @@ public class Mediator implements MediatorInterface {
             switch (option) {
                 case 1 -> gestorAulaFileSystem.showMenu();
                 case 2 -> gestorProductoFileSystem.showMenu();
-                case 3 -> GestorMarcaje.showMenuMarcajes();
+                case 3 -> gestorMarcajeFileSystem.showMenu();
                 case 4 -> GestorReportes.generateReports(mediator, scanner);
                 case 5 -> {
                     try {

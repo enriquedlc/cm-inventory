@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Marcaje implements MarcajeInterface {
+public class MarcajeDatabase implements MarcajeInterface {
 
     private int idProducto;
     private int idAula;
@@ -21,17 +21,17 @@ public class Marcaje implements MarcajeInterface {
     private TipoMarcaje tipo;
     private int idMarcaje;
 
-    public Marcaje() {
+    public MarcajeDatabase() {
     }
 
-    public Marcaje(int idProducto, int idAula, Date timeStamp, TipoMarcaje tipo) {
+    public MarcajeDatabase(int idProducto, int idAula, Date timeStamp, TipoMarcaje tipo) {
         this.idProducto = idProducto;
         this.idAula = idAula;
         this.timeStamp = timeStamp;
         this.tipo = tipo;
     }
 
-    public Marcaje(int idMarcaje, int idProducto, int idAula, Date timeStamp, TipoMarcaje tipo) {
+    public MarcajeDatabase(int idMarcaje, int idProducto, int idAula, Date timeStamp, TipoMarcaje tipo) {
         this.idMarcaje = idMarcaje;
         this.idProducto = idProducto;
         this.idAula = idAula;
@@ -134,7 +134,7 @@ public class Marcaje implements MarcajeInterface {
     @Override
     public MarcajeInterface selectMarcaje(int id) {
         String sql = SQLBuilder.getSELECT_MARCAJE_BY_ID();
-        Marcaje marcaje = null;
+        MarcajeDatabase marcaje = null;
         try (Connection connection = ConnectionDb.get(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, idMarcaje);
             ResultSet result = preparedStatement.executeQuery();
@@ -143,7 +143,7 @@ public class Marcaje implements MarcajeInterface {
                 int idAula = result.getInt("idAula");
                 Date timeStamp = result.getTimestamp("timeStamp");
                 TipoMarcaje tipo = TipoMarcaje.valueOf(result.getString("tipo"));
-                marcaje = new Marcaje(idMarcaje, idProducto, idAula, timeStamp, tipo);
+                marcaje = new MarcajeDatabase(idMarcaje, idProducto, idAula, timeStamp, tipo);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -168,7 +168,7 @@ public class Marcaje implements MarcajeInterface {
                 } else {
                     tipo = TipoMarcaje.SALIDA;
                 }
-                marcajes.add(new Marcaje(idMarcaje, idProducto, idAula, timeStamp, tipo));
+                marcajes.add(new MarcajeDatabase(idMarcaje, idProducto, idAula, timeStamp, tipo));
             }
         } catch (SQLException ex) {
             System.out.println(ex);

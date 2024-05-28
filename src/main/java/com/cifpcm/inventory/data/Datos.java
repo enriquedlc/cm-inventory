@@ -3,7 +3,7 @@ package com.cifpcm.inventory.data;
 import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.models.aula.AulaDatabase;
 import com.cifpcm.inventory.models.aula.AulaInterface;
-import com.cifpcm.inventory.models.marcaje.Marcaje;
+import com.cifpcm.inventory.models.marcaje.MarcajeDatabase;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 import com.cifpcm.inventory.models.marcaje.enums.TipoMarcaje;
 import com.cifpcm.inventory.models.producto.ProductoDatabase;
@@ -72,7 +72,7 @@ public class Datos {
                     Date timeStamp = dateFormat.parse(fields[2].trim());
                     TipoMarcaje tipo = convertToTipoMarcaje(fields[3].trim());
                     if (tipo != null) {
-                        Marcaje marcaje = new Marcaje(idProducto, idAula, timeStamp, tipo);
+                        MarcajeDatabase marcaje = new MarcajeDatabase(idProducto, idAula, timeStamp, tipo);
                         mediator.addMarcaje(marcaje);
                     } else {
                         System.out.println("Error: TipoMarcaje no válido en línea: " + line);
@@ -85,16 +85,11 @@ public class Datos {
     }
 
     private TipoMarcaje convertToTipoMarcaje(String tipoString) {
-        switch (tipoString) {
-            case "0":
-            case "ENTRADA":
-                return TipoMarcaje.ENTRADA;
-            case "1":
-            case "SALIDA":
-                return TipoMarcaje.SALIDA;
-            default:
-                return null;
-        }
+        return switch (tipoString) {
+            case "0", "ENTRADA" -> TipoMarcaje.ENTRADA;
+            case "1", "SALIDA" -> TipoMarcaje.SALIDA;
+            default -> null;
+        };
     }
 
     public void cargarDatosTrabajoDesconectado(String aulaFile, String productoFile, String marcajeFile) throws IOException {

@@ -3,7 +3,7 @@ package com.cifpcm.inventory.models.aula;
 import com.cifpcm.inventory.database.ConnectionDb;
 import com.cifpcm.inventory.database.SQLBuilder;
 import com.cifpcm.inventory.mediator.Mediator;
-import com.cifpcm.inventory.models.marcaje.Marcaje;
+import com.cifpcm.inventory.models.marcaje.MarcajeDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +69,7 @@ public class AulaDatabase implements AulaInterface {
 
     @Override
     public boolean deleteAula(int idAula) {
-    Marcaje marcaje = new Marcaje();
+    MarcajeDatabase marcaje = new MarcajeDatabase();
     int count = marcaje.countMarcajesByAula(idAula);
 
     if (count > 0) {
