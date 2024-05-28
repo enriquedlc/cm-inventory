@@ -1,6 +1,7 @@
 package com.cifpcm.inventory.mediator;
 
 import com.cifpcm.inventory.models.aula.AulaInterface;
+import com.cifpcm.inventory.models.marcaje.Marcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 
 import java.util.Date;
@@ -10,15 +11,15 @@ import java.util.Map;
 
 public interface MediatorInterface {
      // Métodos para obtener marcajes
-    List<MarcajeInterface> getMarcajesByProducto(int idProducto, Date fechaInicio, Date fechaFin);
+    List<Marcaje> getMarcajesByProducto(int idProducto, Date fechaInicio, Date fechaFin);
 
-    List<MarcajeInterface> getMarcajesByAula(int idAula, Date fechaInicio, Date fechaFin);
+    List<Marcaje> getMarcajesByAula(int idAula, Date fechaInicio, Date fechaFin);
 
-    List<MarcajeInterface> getMarcajesByProductoYAula(int idProducto, int idAula);
+    List<Marcaje> getMarcajesByProductoYAula(int idProducto, int idAula);
 
-    List<MarcajeInterface> obtenerMarcajesConErrores();
+    List<Marcaje> obtenerMarcajesConErrores();
 
-    List<MarcajeInterface> obtenerMarcajesConErrores(Date fechaInicio, Date fechaFin);
+    List<Marcaje> obtenerMarcajesConErrores(Date fechaInicio, Date fechaFin);
 
     // Método para obtener numeraciones de aulas
     Map<Integer, String> obtenerNumeracionesAulas();

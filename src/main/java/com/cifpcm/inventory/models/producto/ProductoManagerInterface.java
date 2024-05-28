@@ -18,5 +18,5 @@ public interface ProductoManagerInterface {
 
     ArrayList<Producto> selectAllProductos();
     
-    boolean exists(int idProducto, ArrayList<Producto> productos);
+    boolean exists(int idProducto);
 }

@@ -1,5 +1,6 @@
 package com.cifpcm.inventory.models.aula;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import java.util.ArrayList;
 
 /**
@@ -8,22 +9,21 @@ import java.util.ArrayList;
  */
 public class AulaManager implements AulaManagerInterface {
 
-    private ArrayList<Aula> aulas;
-
-    public AulaManager() {
-        this.aulas = new ArrayList<>();
+    Mediator mediator;
+    public AulaManager(Mediator mediator) {
+        this.mediator = mediator;
     }
 
     @Override
     public boolean insertAula(Aula aula) {
-        return aulas.add(aula);
+        return mediator.getAulas().add(aula);
     }
 
     @Override
     public boolean updateAula(Aula aula) {
-        for (int i = 0; i < aulas.size(); i++) {
-            if (aulas.get(i).getIdAula() == aula.getIdAula()) {
-                aulas.set(i, aula);
+        for (int i = 0; i < mediator.getAulas().size(); i++) {
+            if (mediator.getAulas().get(i).getIdAula() == aula.getIdAula()) {
+                mediator.getAulas().set(i, aula);
                 return true;
             }
         }
@@ -32,12 +32,12 @@ public class AulaManager implements AulaManagerInterface {
 
     @Override
     public boolean deleteAula(int idAula) {
-        return aulas.removeIf(aula -> aula.getIdAula() == idAula);
+        return mediator.getAulas().removeIf(aula -> aula.getIdAula() == idAula);
     }
 
     @Override
     public Aula selectAula(int idAula) {
-        for (Aula aula : aulas) {
+        for (Aula aula : mediator.getAulas()) {
             if (aula.getIdAula() == idAula) {
                 return aula;
             }
@@ -47,15 +47,10 @@ public class AulaManager implements AulaManagerInterface {
 
     @Override
     public ArrayList<Aula> selectAllAulas() {
-        return new ArrayList<>(aulas);
+        return mediator.getAulas();
     }
     
     public boolean exists(int idAula) {
-        for (Aula aula : aulas) {
-            if (aula.getIdAula() == idAula) {
-                return true;
-            }
-        }
-        return false;
+        return mediator.getAulas().stream().anyMatch(aula -> aula.getIdAula() == idAula);
     }
 }

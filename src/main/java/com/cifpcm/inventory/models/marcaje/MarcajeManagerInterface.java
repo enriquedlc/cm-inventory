@@ -9,19 +9,19 @@ import java.util.List;
  */
 public interface MarcajeManagerInterface {
 
-    boolean insertMarcaje(MarcajeInterface marcaje);
+    boolean insertMarcaje(Marcaje marcaje);
 
-    boolean updateMarcaje(MarcajeInterface marcaje);
+    boolean updateMarcaje(Marcaje marcaje);
 
     boolean deleteMarcaje(int id);
 
-    MarcajeInterface selectMarcaje(int id);
+    Marcaje selectMarcaje(int id);
 
     boolean deleteMarcajesByProducto(int idProducto);
 
     int countMarcajesByAula(int idAula);
 
-    List<MarcajeInterface> getAllMarcajes();
+    List<Marcaje> getAllMarcajes();
 
-    List<MarcajeInterface> getAllMarcajes(Date fechaInicio, Date fechaFin);
+    List<Marcaje> getAllMarcajes(Date fechaInicio, Date fechaFin);
 }

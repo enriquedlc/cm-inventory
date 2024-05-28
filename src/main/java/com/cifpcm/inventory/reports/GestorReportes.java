@@ -1,6 +1,7 @@
 package com.cifpcm.inventory.reports;
 
 import com.cifpcm.inventory.mediator.MediatorInterface;
+import com.cifpcm.inventory.models.marcaje.Marcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 import com.cifpcm.inventory.utils.Menu;
 import java.text.ParseException;
@@ -67,7 +68,7 @@ public class GestorReportes {
         System.out.print("Introduce la fecha de fin (yyyy-MM-dd HH:mm:ss): ");
         Date fechaFin = parseFecha(scanner.nextLine());
 
-        List<MarcajeInterface> fichajes = mediator.getMarcajesByProducto(idProducto, fechaInicio, fechaFin);
+        List<Marcaje> fichajes = mediator.getMarcajesByProducto(idProducto, fechaInicio, fechaFin);
         mostrarInforme(fichajes, "InformeMarcajesProducto.pdf", "Informe de Fichajes del Producto");
     }
 
@@ -82,7 +83,7 @@ public class GestorReportes {
         System.out.print("Introduce la fecha de fin (yyyy-MM-dd HH:mm:ss): ");
         Date fechaFin = parseFecha(scanner.nextLine());
 
-        List<MarcajeInterface> fichajes = mediator.getMarcajesByAula(idAula, fechaInicio, fechaFin);
+        List<Marcaje> fichajes = mediator.getMarcajesByAula(idAula, fechaInicio, fechaFin);
         mostrarInforme(fichajes, "InformeMarcajesAula.pdf", "Informe de Fichajes de Productos de un Aula");
     }
 
@@ -95,7 +96,7 @@ public class GestorReportes {
         int idAula = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
 
-        List<MarcajeInterface> fichajes = mediator.getMarcajesByProductoYAula(idProducto, idAula);
+        List<Marcaje> fichajes = mediator.getMarcajesByProductoYAula(idProducto, idAula);
         mostrarInforme(fichajes, "InformeMarcajesProductoYAula.pdf", "Informe de Fichajes de un Producto y un Aula");
     }
 
@@ -106,12 +107,12 @@ public class GestorReportes {
         System.out.print("Introduce la fecha de fin (yyyy-MM-dd HH:mm:ss): ");
         Date fechaFin = parseFecha(scanner.nextLine());
 
-        List<MarcajeInterface> marcajesConErrores = mediator.obtenerMarcajesConErrores(fechaInicio, fechaFin);
+        List<Marcaje> marcajesConErrores = mediator.obtenerMarcajesConErrores(fechaInicio, fechaFin);
         mostrarInforme(marcajesConErrores, "InformeErrores.pdf", "Informe de Detección de Errores");
 
     }
 
-    private static void mostrarInforme(List<MarcajeInterface> fichajes, String nombreArchivo, String titulo) {
+    private static void mostrarInforme(List<Marcaje> fichajes, String nombreArchivo, String titulo) {
         if (fichajes.isEmpty()) {
             System.out.println("No se encontraron fichajes en el rango de fechas especificado");
         } else {

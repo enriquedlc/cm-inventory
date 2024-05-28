@@ -1,6 +1,6 @@
 package com.cifpcm.inventory.models.aula;
 
-import com.cifpcm.inventory.mediator.MediatorInterface;
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.utils.Menu;
 import com.cifpcm.inventory.utils.Confirm;
 import com.cifpcm.inventory.utils.VerificarEntrada;
@@ -8,14 +8,10 @@ import com.cifpcm.inventory.utils.VerificarEntrada;
 
 public class GestorAula {
 
-   private AulaManager aulaManager;
-    
-    public GestorAula(){
-        this.aulaManager = new AulaManager(); // Inicializa aulaManager
-    }
+   private final AulaManager aulaManager;
 
-    public GestorAula(MediatorInterface mediator) {
-        this.aulaManager = new AulaManager(); // Inicializa aulaManager
+    public GestorAula(Mediator mediator) {
+        this.aulaManager = new AulaManager(mediator); // Inicializa aulaManager
     }
    
     public void showMenuAulas() {
@@ -28,8 +24,10 @@ public class GestorAula {
                     String numeracion = VerificarEntrada.getString("Introduce la numeración del aula: ");
                     String descripcion = VerificarEntrada.getString("Introduce la descripción del aula: ");
                     String ip = VerificarEntrada.getIp("Introduce la IP del aula: ");
+
                     aulaManager.insertAula(new Aula(numeracion, descripcion, ip));
-                    aulaManager.selectAllAulas().forEach(System.out::println);
+                    System.out.println("Aula añadida.");
+
                 }
                 case 2 -> aulaManager.selectAllAulas().forEach(System.out::println);
                 case 3 -> {

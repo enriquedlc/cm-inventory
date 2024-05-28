@@ -1,5 +1,7 @@
 package com.cifpcm.inventory.models.marcaje;
 
+import com.cifpcm.inventory.mediator.Mediator;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,22 +13,21 @@ import java.util.stream.Collectors;
  */
 public class MarcajeManager implements MarcajeManagerInterface {
 
-    private ArrayList<MarcajeInterface> marcajes;
-
-    public MarcajeManager() {
-        this.marcajes = new ArrayList<>();
+    Mediator mediator;
+    public MarcajeManager(Mediator mediator) {
+        this.mediator = mediator;
     }
 
     @Override
-    public boolean insertMarcaje(MarcajeInterface marcaje) {
-        return marcajes.add(marcaje);
+    public boolean insertMarcaje(Marcaje marcaje) {
+        return mediator.getMarcajes().add(marcaje);
     }
 
     @Override
-    public boolean updateMarcaje(MarcajeInterface marcaje) {
-        for (int i = 0; i < marcajes.size(); i++) {
-            if (marcajes.get(i).getIdMarcaje() == marcaje.getIdMarcaje()) {
-                marcajes.set(i, marcaje);
+    public boolean updateMarcaje(Marcaje marcaje) {
+        for (int i = 0; i < mediator.getMarcajes().size(); i++) {
+            if (mediator.getMarcajes().get(i).getIdMarcaje() == marcaje.getIdMarcaje()) {
+                mediator.getMarcajes().set(i, marcaje);
                 return true;
             }
         }
@@ -35,12 +36,12 @@ public class MarcajeManager implements MarcajeManagerInterface {
 
     @Override
     public boolean deleteMarcaje(int id) {
-        return marcajes.removeIf(m -> m.getIdMarcaje() == id);
+        return mediator.getMarcajes().removeIf(m -> m.getIdMarcaje() == id);
     }
 
     @Override
-    public MarcajeInterface selectMarcaje(int id) {
-        for (MarcajeInterface marcaje : marcajes) {
+    public Marcaje selectMarcaje(int id) {
+        for (Marcaje marcaje : mediator.getMarcajes()) {
             if (marcaje.getIdMarcaje() == id) {
                 return marcaje;
             }
@@ -50,30 +51,28 @@ public class MarcajeManager implements MarcajeManagerInterface {
 
     @Override
     public boolean deleteMarcajesByProducto(int idProducto) {
-        return marcajes.removeIf(m -> m.getIdProducto() == idProducto);
+        return mediator.getMarcajes().removeIf(m -> m.getIdProducto() == idProducto);
     }
 
     @Override
     public int countMarcajesByAula(int idAula) {
-        return (int) marcajes.stream().filter(m -> m.getIdAula() == idAula).count();
+        return (int) mediator.getMarcajes().stream().filter(m -> m.getIdAula() == idAula).count();
     }
 
     @Override
-    public ArrayList<MarcajeInterface> getAllMarcajes() {
-        return new ArrayList<>(marcajes);
+    public ArrayList<Marcaje> getAllMarcajes() {
+        return mediator.getMarcajes();
     }
 
     @Override
-    public ArrayList<MarcajeInterface> getAllMarcajes(Date fechaInicio, Date fechaFin) {
-        return marcajes.stream()
-                .filter(m -> !m.getTimeStamp().before(fechaInicio) && !m.getTimeStamp().after(fechaFin))
-                .collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<Marcaje> getAllMarcajes(Date fechaInicio, Date fechaFin) {
+        return (ArrayList<Marcaje>) mediator.getMarcajes().stream().filter(m -> m.getTimeStamp().after(fechaInicio) && m.getTimeStamp().before(fechaFin)).collect(Collectors.toList());
     }
     
-    public static ArrayList<MarcajeInterface> getMarcajesByProducto(int idProducto, ArrayList<MarcajeInterface> marcajes) {
-    ArrayList<MarcajeInterface> marcajesByProducto = new ArrayList<>();
+    public static ArrayList<Marcaje> getMarcajesByProducto(int idProducto, ArrayList<Marcaje> marcajes) {
+    ArrayList<Marcaje> marcajesByProducto = new ArrayList<>();
 
-    for (MarcajeInterface marcaje : marcajes) {
+    for (Marcaje marcaje : marcajes) {
         if (marcaje.getIdProducto() == idProducto) {
             marcajesByProducto.add(marcaje);
         }

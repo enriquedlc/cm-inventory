@@ -1,6 +1,7 @@
 
 package com.cifpcm.inventory.models.producto;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.utils.VerificarEntrada;
 import java.util.ArrayList;
 
@@ -10,21 +11,19 @@ import java.util.ArrayList;
  */
 public class ProductoManager implements ProductoManagerInterface {
 
-    private ArrayList<Producto> productos;
-    
-    public ProductoManager(){}
-    public ProductoManager(ArrayList<Producto> productos) {
-        this.productos = productos;
+    Mediator mediator;
+    public ProductoManager(Mediator mediator) {
+        this.mediator = mediator;
     }
 
     @Override
     public boolean insertProducto(Producto producto) {
-        return productos.add(producto);
+        return mediator.getProductos().add(producto);
     }
 
     @Override
     public boolean updateProducto(Producto producto) {
-        for (Producto p : productos) {
+        for (Producto p : mediator.getProductos()) {
             if (p.getIdProducto() == producto.getIdProducto()) {
                 p.setDescripcion(producto.getDescripcion());
                 p.setEAN13(producto.getEan());
@@ -37,19 +36,14 @@ public class ProductoManager implements ProductoManagerInterface {
 
     @Override
     public boolean deleteProducto(int id) {
-        for (Producto p : productos) {
-            if (p.getIdProducto() == id) {
-                return productos.remove(p);
-            }
-        }
-        return false;
+        return mediator.getProductos().removeIf(p -> p.getIdProducto() == id);
     }
 
     @Override
     public Producto selectProducto(int id) {
-        for (Producto p : productos) {
-            if (p.getIdProducto() == id) {
-                return p;
+        for (Producto producto : mediator.getProductos()) {
+            if (producto.getIdProducto() == id) {
+                return producto;
             }
         }
         return null;
@@ -57,16 +51,11 @@ public class ProductoManager implements ProductoManagerInterface {
 
     @Override
     public ArrayList<Producto> selectAllProductos() {
-        return new ArrayList<>(productos);
+        return mediator.getProductos();
     }
 
     @Override
-    public boolean exists(int idProducto, ArrayList<Producto> productos) {
-        for (Producto producto : productos) {
-            if (producto.getIdProducto() == idProducto) {
-                return true;
-            }
-        }
-        return false;
+    public boolean exists(int idProducto) {
+        return mediator.getProductos().stream().anyMatch(p -> p.getIdProducto() == idProducto);
     }
 }

@@ -1,5 +1,6 @@
 package com.cifpcm.inventory.data;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.mediator.MediatorInterface;
 import com.cifpcm.inventory.models.aula.AulaManager;
 import com.cifpcm.inventory.utils.Menu;
@@ -16,8 +17,9 @@ public class GestorDatos {
     private static final String PRODUCTO_FILE = "productos.txt";
     private static final String MARCAJE_FILE = "marcajes.txt";
 
-    public static void manageData(MediatorInterface mediator, Scanner scanner, Datos datos) throws IOException, ClassNotFoundException, ParseException {
-    AulaManager aulaManager = new AulaManager(); // Crear instancia de AulaManager
+
+    public static void manageData(Mediator mediator, Scanner scanner, Datos datos) throws IOException, ClassNotFoundException, ParseException {
+    AulaManager aulaManager = new AulaManager(mediator); // Crear instancia de AulaManager
 
     while (true) {
         System.out.println(Menu.showData());

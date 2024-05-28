@@ -1,5 +1,6 @@
 package com.cifpcm.inventory.reports;
 
+import com.cifpcm.inventory.models.marcaje.Marcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 import com.cifpcm.inventory.models.marcaje.TipoMarcaje;
 import com.cifpcm.inventory.models.producto.Producto;
@@ -20,7 +21,7 @@ import java.util.TimeZone;
 
 public class GeneradorInformes {
 
-    public void generarInformePDF(List<MarcajeInterface> fichajes, String nombreArchivo, String tituloInforme) throws MalformedURLException {
+    public void generarInformePDF(List<Marcaje> fichajes, String nombreArchivo, String tituloInforme) throws MalformedURLException {
         try {
             PdfWriter pdfWriter = new PdfWriter(nombreArchivo);
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);

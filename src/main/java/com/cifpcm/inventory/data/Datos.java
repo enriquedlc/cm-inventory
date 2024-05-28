@@ -1,5 +1,6 @@
 package com.cifpcm.inventory.data;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.models.aula.Aula;
 import com.cifpcm.inventory.models.aula.AulaInterface;
 import com.cifpcm.inventory.models.aula.AulaManager;
@@ -26,10 +27,13 @@ public class Datos {
     private final ArrayList<AulaInterface> aulas = new ArrayList<>();
     private final ArrayList<ProductoInterface> productos = new ArrayList<>();
     private final ArrayList<MarcajeInterface> marcajes = new ArrayList<>();
-    private MarcajeManagerInterface marcajeManager;
 
-    public Datos() {
-        this.marcajeManager = new MarcajeManager();
+    Mediator mediator;
+    MarcajeManagerInterface marcajeManager;
+
+    public Datos(Mediator mediator) {
+        this.marcajeManager = new MarcajeManager(mediator);
+        this.mediator = mediator;
     }
 
     public void registerAula(AulaInterface aula) {

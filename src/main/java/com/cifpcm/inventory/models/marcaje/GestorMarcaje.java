@@ -1,8 +1,10 @@
 package com.cifpcm.inventory.models.marcaje;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.mediator.MediatorInterface;
 import com.cifpcm.inventory.models.aula.Aula;
 import com.cifpcm.inventory.models.aula.AulaManager;
+import com.cifpcm.inventory.models.aula.AulaManagerInterface;
 import com.cifpcm.inventory.models.producto.Producto;
 import com.cifpcm.inventory.models.producto.ProductoManager;
 import com.cifpcm.inventory.models.producto.ProductoManagerInterface;
@@ -16,25 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author tecen
  */
 public class GestorMarcaje {
 
-    private final MarcajeManager marcajeManager;
-    private final AulaManager aulaManager;
-    private ProductoManagerInterface productoManager;
-    
-    public GestorMarcaje() {
-    this.marcajeManager = new MarcajeManager();
-    this.aulaManager = new AulaManager();
-    this.productoManager = new ProductoManager(new ArrayList<>());
-}
-    public GestorMarcaje(ProductoManagerInterface productoManager) {
-    this.marcajeManager = new MarcajeManager();
-    this.aulaManager = new AulaManager();
-    this.productoManager = productoManager;
-}
+    MarcajeManagerInterface marcajeManager;
+    AulaManagerInterface aulaManager;
+    ProductoManagerInterface productoManager;
+
+    public GestorMarcaje(Mediator mediator) {
+    }
 
     public void showMenuMarcajes() {
         int option;
@@ -122,22 +115,22 @@ public class GestorMarcaje {
     }
 
     private Date getValidDate() {
-    String dateString;
-    Date date = null;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    format.setLenient(false);
-    boolean valid = false;
-    while (!valid) {
-        dateString = VerificarEntrada.getString("Introduce la fecha del marcaje (yyyy-MM-dd HH:mm:ss): ");
-        try {
-            date = (Date) format.parse(dateString);
-            valid = true;
-        } catch (ParseException e) {
-            System.out.println("Fecha inválida. Por favor, introduce una fecha en el formato yyyy-MM-dd HH:mm:ss.");
+        String dateString;
+        Date date = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format.setLenient(false);
+        boolean valid = false;
+        while (!valid) {
+            dateString = VerificarEntrada.getString("Introduce la fecha del marcaje (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                date = (Date) format.parse(dateString);
+                valid = true;
+            } catch (ParseException e) {
+                System.out.println("Fecha inválida. Por favor, introduce una fecha en el formato yyyy-MM-dd HH:mm:ss.");
+            }
         }
+        return date;
     }
-    return date;
-}
 
     private boolean getConfirmation(String prompt) {
         String input;
@@ -149,5 +142,5 @@ public class GestorMarcaje {
         } while (!input.equals("s") && !input.equals("n"));
         return input.equals("s");
     }
-   
+
 }

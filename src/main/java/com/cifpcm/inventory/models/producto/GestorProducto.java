@@ -1,25 +1,28 @@
 package com.cifpcm.inventory.models.producto;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.models.marcaje.MarcajeManager;
+
 import static com.cifpcm.inventory.utils.Confirm.getConfirmation;
+
 import com.cifpcm.inventory.utils.Menu;
 import com.cifpcm.inventory.utils.VerificarEntrada;
+
+import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 
 /**
- *
  * @author tecen
  */
 public class GestorProducto {
 
-    private ProductoManagerInterface productoManager;
-    
-    public GestorProducto() {
-    this.productoManager = new ProductoManager(new ArrayList<>());
-}
-    
-    public GestorProducto(ProductoManagerInterface productoManager) {
-        this.productoManager = productoManager;
+    private final ProductoManagerInterface productoManager;
+
+    Mediator mediator;
+
+    public GestorProducto(Mediator mediator) {
+        this.productoManager = new ProductoManager(mediator);
+        this.mediator = mediator;
     }
 
     public void showMenuProductos() {
@@ -40,14 +43,13 @@ public class GestorProducto {
                     }
                     productoManager.selectAllProductos().forEach(System.out::println);
                 }
-                case 2 ->
-                    productoManager.selectAllProductos().forEach(System.out::println);
+                case 2 -> productoManager.selectAllProductos().forEach(System.out::println);
                 case 3 -> {
                     int idProducto = VerificarEntrada.getInt("Introduce el id del producto a eliminar: ");
                     boolean confirm = getConfirmation("¿Estás seguro de que deseas eliminar el producto con ID " + idProducto + "? (s/n): ");
                     if (confirm) {
                         // Primero, eliminar todos los marcajes asociados al producto
-                        MarcajeManager marcajemanager = new MarcajeManager();
+                        MarcajeManager marcajemanager = new MarcajeManager(this.mediator);
                         boolean marcajesEliminados = marcajemanager.deleteMarcajesByProducto(idProducto);
                         if (marcajesEliminados) {
                             System.out.println("Marcajes asociados eliminados.");
@@ -80,10 +82,8 @@ public class GestorProducto {
                     }
                     productoManager.selectAllProductos().forEach(System.out::println);
                 }
-                case 0 ->
-                    System.out.println("Back");
-                default ->
-                    System.out.println("Opción inválida. Porfavor intenta de nuevo.");
+                case 0 -> System.out.println("Back");
+                default -> System.out.println("Opción inválida. Porfavor intenta de nuevo.");
             }
         } while (option != 0);
     }
