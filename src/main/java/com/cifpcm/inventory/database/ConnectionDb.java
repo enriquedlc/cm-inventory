@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class ConnectionDb {
 
-     private static final String URL = "jdbc:mysql://localhost:3306/difpcm-inventory";
+     private static final String URL = "jdbc:mysql://localhost:3306/inventario";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 

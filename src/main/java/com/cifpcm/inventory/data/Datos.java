@@ -103,7 +103,7 @@ public class Datos {
                     continue; // Pasar a la siguiente línea
                 }
                 try {
-                    int idProducto = Integer.parseInt(fields[0].trim()); // test
+                    int idProducto = Integer.parseInt(fields[0].trim());
                     int idAula = Integer.parseInt(fields[1].trim());
                     Date timeStamp = dateFormat.parse(fields[2].trim()); // Parsear la fecha sin la hora
                     TipoMarcaje tipo = convertToTipoMarcaje(fields[3].trim());

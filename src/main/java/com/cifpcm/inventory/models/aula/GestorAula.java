@@ -1,39 +1,41 @@
 package com.cifpcm.inventory.models.aula;
 
-import com.cifpcm.inventory.mediator.MediatorInterface;
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.utils.Menu;
 import com.cifpcm.inventory.utils.Confirm;
+import com.cifpcm.inventory.utils.VerificarEntrada;
 
-import java.util.List;
 
 public class GestorAula {
 
-    public GestorAula(MediatorInterface mediator) {
+   private final AulaManager aulaManager;
 
+    public GestorAula(Mediator mediator) {
+        this.aulaManager = new AulaManager(mediator); // Inicializa aulaManager
     }
-
-    public static void showMenuAulas() {
-        Aula aula = new Aula();
+   
+    public void showMenuAulas() {
         int option;
         do {
             System.out.println(Menu.showSpecific("Aula"));
-            option = Menu.getInt();
+            option = VerificarEntrada.getMenuOption("Selecciona una opción: ", 0, 4);
             switch (option) {
                 case 1 -> {
-                    String numeracion = Menu.getString("Introduce la numeración del aula: ");
-                    String descripcion = Menu.getString("Introduce la descripción del aula: ");
-                    String ip = Menu.getString("Introduce la IP del aula: ");
-                    aula.insertAula(new Aula(numeracion, descripcion, ip));
-                    aula.selectAllAulas().forEach(System.out::println);
+                    String numeracion = VerificarEntrada.getString("Introduce la numeración del aula: ");
+                    String descripcion = VerificarEntrada.getString("Introduce la descripción del aula: ");
+                    String ip = VerificarEntrada.getIp("Introduce la IP del aula: ");
+
+                    aulaManager.insertAula(new Aula(numeracion, descripcion, ip));
+                    System.out.println("Aula añadida.");
+
                 }
-                case 2 ->
-                    aula.selectAllAulas().forEach(System.out::println);
+                case 2 -> aulaManager.selectAllAulas().forEach(System.out::println);
                 case 3 -> {
-                    aula.selectAllAulas().forEach(System.out::println);
-                    int idAula = Menu.getInt("Introduce el id del aula a eliminar: ");
+                    aulaManager.selectAllAulas().forEach(System.out::println);
+                    int idAula = VerificarEntrada.getInt("Introduce el id del aula a eliminar: ");
                     boolean confirm = Confirm.getConfirmation("¿Estás seguro de que deseas eliminar el aula con ID " + idAula + "? (s/n): ");
                     if (confirm) {
-                        boolean deleted = aula.deleteAula(idAula);
+                        boolean deleted = aulaManager.deleteAula(idAula);
                         if (deleted) {
                             System.out.println("Aula eliminada.");
                         } else {
@@ -42,21 +44,23 @@ public class GestorAula {
                     } else {
                         System.out.println("Operación cancelada.");
                     }
-                    aula.selectAllAulas().forEach(System.out::println);
+                    aulaManager.selectAllAulas().forEach(System.out::println);
                 }
                 case 4 -> {
-                    int idAula = Menu.getInt("Introduce el id del aula a modificar: ");
-                    String numeracion = Menu.getString("Introduce la numeración del aula: ");
-                    String descripcion = Menu.getString("Introduce la descripción del aula: ");
-                    String ip = Menu.getString("Introduce la IP del aula: ");
-                    aula.updateAula(new Aula(idAula, numeracion, descripcion, ip));
-                    aula.selectAllAulas().forEach(System.out::println);
-
+                    int idAula = VerificarEntrada.getInt("Introduce el id del aula a modificar: ");
+                    String numeracion = VerificarEntrada.getString("Introduce la numeración del aula: ");
+                    String descripcion = VerificarEntrada.getString("Introduce la descripción del aula: ");
+                    String ip = VerificarEntrada.getIp("Introduce la IP del aula: ");
+                    boolean updated = aulaManager.updateAula(new Aula(idAula, numeracion, descripcion, ip));
+                    if (updated) {
+                        System.out.println("Aula actualizada.");
+                    } else {
+                        System.out.println("No se pudo actualizar el aula.");
+                    }
+                    aulaManager.selectAllAulas().forEach(System.out::println);
                 }
-                case 0 ->
-                    System.out.println("Back");
-                default ->
-                    System.out.println("Opción inválida. Porfavor intenta de nuevo.");
+                case 0 -> System.out.println("Regresando al menú principal.");
+                default -> System.out.println("Opción inválida. Por favor, intenta de nuevo.");
             }
         } while (option != 0);
     }

@@ -13,6 +13,10 @@ public class SQLBuilder {
     private static final String DELETE_AULA_SQL = "DELETE FROM aula WHERE idAula = ?";
     private static final String UPDATE_AULA_SQL = "UPDATE aula SET numeracion = ?, descripcion = ?, ip = ? WHERE idAula = ?";
     private static final String EXISTS_AULA_SQL = "SELECT COUNT(*) FROM aula WHERE idAula = ?";
+    private static final String SELECT_MARCAJES_BY_AULA = "SELECT m.IdMarcaje, m.IdProducto, m.IdAula, m.TimeStamp, m.Tipo, p.Descripcion "
+            + "FROM Marcaje m "
+            + "INNER JOIN Productos p ON m.IdProducto = p.IdProducto "
+            + "WHERE m.IdAula = ? AND m.TimeStamp BETWEEN ? AND ?";
 
     // Consultas SQL para la tabla de productos
     private static final String INSERT_PRODUCTO_SQL = "INSERT INTO productos (descripcion, EAN13, keyRFID) VALUES (?, ?, ?);";
@@ -25,13 +29,26 @@ public class SQLBuilder {
     // Consultas SQL para la tabla de marcajes
     private static final String INSERT_MARCAJE_SQL = "INSERT INTO marcaje (idProducto, idAula, timeStamp, tipo) VALUES (?, ?, ?, ?);";
     private static final String SELECT_MARCAJE_BY_ID = "SELECT idProducto, idAula, timeStamp, tipo FROM marcaje WHERE idMarcaje = ?";
-    private static final String SELECT_ALL_MARCAJES = "SELECT * FROM marcaje";
+    private static final String SELECT_ALL_MARCAJES = "SELECT m.IdMarcaje, m.IdProducto, m.IdAula, m.TimeStamp, m.Tipo, p.Descripcion AS DescripcionProducto\n"
+            + "FROM marcaje m\n"
+            + "INNER JOIN productos p ON m.IdProducto = p.IdProducto;";
+    private static final String SELECT_ALL_MARCAJES_ENTRE_FECHAS ="SELECT m.idMarcaje, m.idProducto, m.idAula, m.timeStamp, m.tipo, p.descripcion AS Descripcion " +
+                 "FROM marcaje m " +
+                 "INNER JOIN productos p ON m.idProducto = p.idProducto " +
+                 "WHERE m.timeStamp BETWEEN ? AND ?";
+    private static final String SELECT_MARCAJES_BY_PRODUCTO = "SELECT m.IdMarcaje, m.IdProducto, m.IdAula, m.Tipo, m.TimeStamp, p.Descripcion "
+            + "FROM marcaje m "
+            + "INNER JOIN productos p ON m.IdProducto = p.IdProducto "
+            + "WHERE m.IdProducto = ? AND m.TimeStamp BETWEEN ? AND ?";
     private static final String DELETE_MARCAJES_BY_PRODUCTO_SQL = "DELETE FROM Marcaje WHERE idProducto = ?";
     private static final String DELETE_MARCAJE_SQL = "DELETE FROM marcaje WHERE idMarcaje = ?";
     private static final String UPDATE_MARCAJE_SQL = "UPDATE marcaje SET idProducto = ?, idAula = ?, timeStamp = ?, tipo = ? WHERE idMarcaje = ?";
     private static final String COUNT_MARCAJES_BY_AULA_SQL = "SELECT COUNT(*) FROM marcaje WHERE idAula = ?";
+    private static final String SELECT_MARCAJES_BY_PRODUCTO_Y_AULA = "SELECT m.IdMarcaje, m.IdAula, m.TimeStamp, m.Tipo, p.Descripcion "
+            + "FROM Marcaje m "
+            + "INNER JOIN Productos p ON m.IdProducto = p.IdProducto "
+            + "WHERE m.IdProducto = ? AND m.IdAula = ?";
 
-    // Getters para las consultas SQL de productos
     public static String getINSERT_PRODUCTO_SQL() {
         return INSERT_PRODUCTO_SQL;
     }
@@ -56,9 +73,17 @@ public class SQLBuilder {
     public static String getINSERT_MARCAJE_SQL() {
         return INSERT_MARCAJE_SQL;
     }
+    
+    public static String getSELECT_ALL_MARCAJES_ENTRE_FECHAS() {
+        return SELECT_ALL_MARCAJES_ENTRE_FECHAS;
+    }
 
     public static String getSELECT_MARCAJE_BY_ID() {
         return SELECT_MARCAJE_BY_ID;
+    }
+
+    public static String getSELECT_MARCAJES_BY_AULA() {
+        return SELECT_MARCAJES_BY_AULA;
     }
 
     public static String getSELECT_ALL_MARCAJES() {
@@ -75,6 +100,14 @@ public class SQLBuilder {
 
     public static String getUPDATE_MARCAJE_SQL() {
         return UPDATE_MARCAJE_SQL;
+    }
+
+    public static String getSELECT_MARCAJES_BY_PRODUCTO() {
+        return SELECT_MARCAJES_BY_PRODUCTO;
+    }
+
+    public static String getSELECT_MARCAJES_BY_PRODUCTO_Y_AULA() {
+        return SELECT_MARCAJES_BY_PRODUCTO_Y_AULA;
     }
 
     public static String getCOUNT_MARCAJES_BY_AULA_SQL() {

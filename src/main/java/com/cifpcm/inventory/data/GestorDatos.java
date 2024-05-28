@@ -26,15 +26,9 @@ public class GestorDatos {
                 case 2 -> datos.guardarDatosTrabajoDesconectado(AULA_FILE, PRODUCTO_FILE, MARCAJE_FILE);
                 case 3 -> {
                     // Lógica para cargar datos de Base de Datos
-                    // 1. esto hace esto
-                    // 2. esto hace esto otro
-                    // 3. esto hace lo otro
                 }
                 case 4 -> {
                     // Lógica para guardar datos a Base de Datos
-                    // 1. esto hace esto
-                    // 2. esto hace esto otro
-                    // 3. esto hace lo otro
                 }
                 case 0 -> {
                     return; // Volver al menú principal
