@@ -1,129 +1,107 @@
 package com.cifpcm.inventory.reports;
 
+import com.cifpcm.inventory.mediator.Mediator;
 import com.cifpcm.inventory.mediator.MediatorInterface;
-import com.cifpcm.inventory.models.marcaje.Marcaje;
 import com.cifpcm.inventory.models.marcaje.MarcajeInterface;
 import com.cifpcm.inventory.utils.Menu;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-
 /**
- *
  * @author tecen
  */
 public class GestorReportes {
 
-    public static void generateReports(MediatorInterface mediator, Scanner scanner) {
-        try {
-            boolean exit = false;
-            while (!exit) {
-                System.out.print(Menu.showReports());
-                System.out.print("Introduce opción: ");
-                int option = scanner.nextInt();
-                scanner.nextLine(); // Clear the buffer
+    private static Mediator mediator = null;
+    private final Scanner scanner = new Scanner(System.in);
 
-                switch (option) {
-                    case 1:
-                        mostrarFichajesProductoPorFecha(mediator, scanner);
-                        break;
-                    case 2:
-                        mostrarFichajesAulaPorFecha(mediator, scanner);
-                        break;
-                    case 3:
-                        mostrarFichajesProductoYAula(mediator, scanner);
-                        break;
-                    case 4:
-                        informeDeteccionErrores(mediator, scanner);
-                        break;
-                    case 0:
-                        exit = true;
-                        break;
-                    default:
-                        System.out.println("Opción no válida.");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error al generar los informes.");
+    public GestorReportes(Mediator mediator) {
+        GestorReportes.mediator = mediator;
+    }
+
+    private static Date parseFecha(String fechaStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            return dateFormat.parse(fechaStr);
+        } catch (ParseException e) {
+            System.out.println("Error al parsear la fecha: " + e.getMessage());
+            return null;
         }
     }
 
-    private static Date parseFecha(String fechaStr) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return dateFormat.parse(fechaStr);
-    }
-
-    private static void mostrarFichajesProductoPorFecha(MediatorInterface mediator, Scanner scanner) throws ParseException {
+    private static void mostrarFichajesProductoPorFecha(Scanner scanner) {
+        // Solicitar al usuario el ID del producto y las fechas
         System.out.print("Introduce el ID del producto: ");
         int idProducto = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
 
         System.out.print("Introduce la fecha de inicio (yyyy-MM-dd HH:mm:ss): ");
-        Date fechaInicio = parseFecha(scanner.nextLine());
+        String fechaInicioStr = scanner.nextLine();
+        Date fechaInicio = parseFecha(fechaInicioStr);
 
         System.out.print("Introduce la fecha de fin (yyyy-MM-dd HH:mm:ss): ");
-        Date fechaFin = parseFecha(scanner.nextLine());
+        String fechaFinStr = scanner.nextLine();
+        Date fechaFin = parseFecha(fechaFinStr);
 
-        List<Marcaje> fichajes = mediator.getMarcajesByProducto(idProducto, fechaInicio, fechaFin);
-        mostrarInforme(fichajes, "InformeMarcajesProducto.pdf", "Informe de Fichajes del Producto");
-    }
+        // Obtener los fichajes del producto entre las fechas especificadas
+        List<MarcajeInterface> fichajes = mediator.getMarcajesByProducto(idProducto, fechaInicio, fechaFin);
 
-    private static void mostrarFichajesAulaPorFecha(MediatorInterface mediator, Scanner scanner) throws ParseException {
-        System.out.print("Introduce el ID del aula: ");
-        int idAula = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
-
-        System.out.print("Introduce la fecha de inicio (yyyy-MM-dd HH:mm:ss): ");
-        Date fechaInicio = parseFecha(scanner.nextLine());
-
-        System.out.print("Introduce la fecha de fin (yyyy-MM-dd HH:mm:ss): ");
-        Date fechaFin = parseFecha(scanner.nextLine());
-
-        List<Marcaje> fichajes = mediator.getMarcajesByAula(idAula, fechaInicio, fechaFin);
-        mostrarInforme(fichajes, "InformeMarcajesAula.pdf", "Informe de Fichajes de Productos de un Aula");
-    }
-
-    private static void mostrarFichajesProductoYAula(MediatorInterface mediator, Scanner scanner) {
-        System.out.print("Introduce el ID del producto: ");
-        int idProducto = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
-
-        System.out.print("Introduce el ID del aula: ");
-        int idAula = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
-
-        List<Marcaje> fichajes = mediator.getMarcajesByProductoYAula(idProducto, idAula);
-        mostrarInforme(fichajes, "InformeMarcajesProductoYAula.pdf", "Informe de Fichajes de un Producto y un Aula");
-    }
-
-    private static void informeDeteccionErrores(MediatorInterface mediator, Scanner scanner) throws ParseException {
-        System.out.print("Introduce la fecha de inicio (yyyy-MM-dd HH:mm:ss): ");
-        Date fechaInicio = parseFecha(scanner.nextLine());
-
-        System.out.print("Introduce la fecha de fin (yyyy-MM-dd HH:mm:ss): ");
-        Date fechaFin = parseFecha(scanner.nextLine());
-
-        List<Marcaje> marcajesConErrores = mediator.obtenerMarcajesConErrores(fechaInicio, fechaFin);
-        mostrarInforme(marcajesConErrores, "InformeErrores.pdf", "Informe de Detección de Errores");
-
-    }
-
-    private static void mostrarInforme(List<Marcaje> fichajes, String nombreArchivo, String titulo) {
+        // Mostrar los fichajes
         if (fichajes.isEmpty()) {
-            System.out.println("No se encontraron fichajes en el rango de fechas especificado");
+            System.out.println("No se encontraron fichajes para el producto en el rango de fechas especificado.");
         } else {
-            System.out.println("Generando informe PDF...");
+            System.out.println("Fichajes del producto ordenados por fecha:");
+            for (MarcajeInterface fichaje : fichajes) {
+                System.out.println(fichaje);
+            }
+        }
+    }
 
-            try {
-                GeneradorInformes generador = new GeneradorInformes();
-                generador.generarInformePDF(fichajes, nombreArchivo, titulo);
-                System.out.println("Informe generado: " + nombreArchivo);
-            } catch (Exception e) {
-                e.printStackTrace();
+    private static void mostrarFichajesAulaPorFecha( Scanner scanner) {
+        // Implementa aquí la lógica para mostrar los fichajes de un aula (entre dos fechas)
+        System.out.println("Mostrando fichajes de un aula (entre dos fechas)...");
+    }
+
+    private static void mostrarFichajesProductoYAula(Scanner scanner) {
+        // Implementa aquí la lógica para mostrar los fichajes de un producto y un aula (o pabellones)
+        System.out.println("Mostrando fichajes de un producto y un aula (o pabellones)...");
+    }
+
+    private static void informeDeteccionErrores(Scanner scanner) {
+        // Implementa aquí la lógica para el informe a crear por el alumno (Detección de errores equipos/en segunda planta)
+        System.out.println("Generando informe de detección de errores (equipos/en segunda planta)...");
+    }
+
+    public void generateReports() {
+        boolean exit = false;
+        while (!exit) {
+            System.out.print(Menu.showReports());
+            System.out.print("Introduce opción: ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Clear the buffer
+
+            switch (option) {
+                case 1:
+                    mostrarFichajesProductoPorFecha(scanner);
+                    break;
+                case 2:
+                    mostrarFichajesAulaPorFecha(scanner);
+                    break;
+                case 3:
+                    mostrarFichajesProductoYAula(scanner);
+                    break;
+                case 4:
+                    informeDeteccionErrores(scanner);
+                    break;
+                case 0:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
             }
         }
     }

@@ -22,23 +22,4 @@ public class ConnectionDb {
         }
         return connection;
     }
-
-    public static void main(String[] args) {
-        try (Connection connection = ConnectionDb.get();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQLBuilder.getSELECT_ALL_AULAS());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(1)
-                        + "\t" + resultSet.getString(2)
-                        + "\t" + resultSet.getString(3));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
-        }
-    }
 }
-
-
-
-
